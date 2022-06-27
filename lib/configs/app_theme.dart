@@ -2,6 +2,7 @@ import 'package:fitness_application/configs/app_color.dart';
 import 'package:fitness_application/configs/app_style.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AppTheme {
   // TODO: Theme definitions
@@ -14,6 +15,8 @@ class AppTheme {
         appBarTheme: _lightAppBarTheme,
         textTheme: _lightTextTheme,
         listTileTheme: _lightListTileThemeData,
+        textButtonTheme: _lightTextButtonThemeData,
+        elevatedButtonTheme: _lightElevatedButtonThemeData,
       );
 
   static ThemeData get dark => ThemeData(
@@ -25,6 +28,8 @@ class AppTheme {
         appBarTheme: _darkAppBarTheme,
         textTheme: _darkTextTheme,
         listTileTheme: _darkListTileThemeData,
+        textButtonTheme: _darkTextButtonThemeData,
+        elevatedButtonTheme: _darkElevatedButtonThemeData,
       );
 
   // Application physics
@@ -138,6 +143,98 @@ class AppTheme {
     iconColor: AppColor.darkWhiteLight,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(LayoutConstant.cardRadius),
+    ),
+  );
+
+  // Text button
+  static final TextButtonThemeData _lightTextButtonThemeData =
+      TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(
+        AppColor.lightWhite,
+      ),
+      foregroundColor: MaterialStateProperty.all(
+        AppColor.lightBlackLight,
+      ),
+      textStyle: MaterialStateProperty.all(
+        AppStyle.style7.copyWith(
+          color: AppColor.lightBlackLight,
+        ),
+      ),
+    ),
+  );
+
+  static final TextButtonThemeData _darkTextButtonThemeData =
+      TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(
+        AppColor.darkBlack,
+      ),
+      foregroundColor: MaterialStateProperty.all(
+        AppColor.darkWhiteLight,
+      ),
+      textStyle: MaterialStateProperty.all(
+        AppStyle.style7.copyWith(
+          color: AppColor.darkWhiteLight,
+        ),
+      ),
+    ),
+  );
+
+  // Elevated button
+  static final ElevatedButtonThemeData _lightElevatedButtonThemeData =
+      ElevatedButtonThemeData(
+    style: ButtonStyle(
+      shape: MaterialStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+        ),
+      ),
+      animationDuration: AppTheme.animationDuration,
+      backgroundColor: MaterialStateProperty.all(AppColor.lightPrimary),
+      elevation: MaterialStateProperty.all(0.0),
+      padding: MaterialStateProperty.all(
+        EdgeInsets.symmetric(horizontal: 24 * LayoutConstant.scaleFactor),
+      ),
+      fixedSize: MaterialStateProperty.all(
+        Size(
+          Get.width - 64 * LayoutConstant.scaleFactor,
+          40 * LayoutConstant.scaleFactor,
+        ),
+      ),
+      textStyle: MaterialStateProperty.all(
+        AppStyle.style7.copyWith(
+          color: AppColor.lightWhiteLight,
+        ),
+      ),
+    ),
+  );
+
+  static final ElevatedButtonThemeData _darkElevatedButtonThemeData =
+      ElevatedButtonThemeData(
+    style: ButtonStyle(
+      shape: MaterialStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+        ),
+      ),
+      animationDuration: AppTheme.animationDuration,
+      backgroundColor: MaterialStateProperty.all(AppColor.darkPrimary),
+      elevation: MaterialStateProperty.all(0.0),
+      padding: MaterialStateProperty.all(
+        EdgeInsets.symmetric(horizontal: 24 * LayoutConstant.scaleFactor),
+      ),
+      fixedSize: MaterialStateProperty.all(
+        Size(
+          Get.width - 64 * LayoutConstant.scaleFactor,
+          40 * LayoutConstant.scaleFactor,
+        ),
+      ),
+      textStyle: MaterialStateProperty.all(
+        AppStyle.style7.copyWith(
+          color: AppColor.darkWhiteLight,
+        ),
+      ),
     ),
   );
 }

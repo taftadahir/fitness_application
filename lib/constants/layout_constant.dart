@@ -10,4 +10,8 @@ class LayoutConstant {
   static double programCardHeight = 96 * scaleFactor;
   static double spaceBetweenTitleAndElements = 16 * scaleFactor;
   static double spaceBetweenElements = 16 * scaleFactor;
+
+  // Dot component
+  static double inactiveDotSize = 8 * scaleFactor;
+  static double activeDotSize = 16 * scaleFactor;
 }
