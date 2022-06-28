@@ -4,10 +4,24 @@ import 'package:get/get.dart';
 
 class ProgramController extends GetxController {
   // Used in Program screen, Program detail screen, result screen
-  Program? _program;
+  Program? _program = Program(
+    sysId: 'sysId',
+    name: "CORE + ABS",
+    level: ProgramLevel.medium,
+    days: 30,
+    status: ProgramStatus.completed,
+    details:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. ',
+  );
 
   // used to show workouts for program on that day
   int? _activeDay = 15;
+
+  // Contain program, exercises images for program detail screen and exercise
+  List<dynamic>? images = ['front_lever.png', 'front_lever.png'];
+
+  // used to show image for the program in program detail screen
+  int? _activeImageIndex = 0;
 
   // List of recommended programs
   List<Program> recommendedPrograms = List.generate(
@@ -46,6 +60,12 @@ class ProgramController extends GetxController {
     if (program != null) {
       update();
     }
+  }
+
+  int get activeImageIndex => _activeImageIndex ?? -1;
+  set activeImageIndex(int activeImageIndex) {
+    _activeImageIndex = activeImageIndex;
+    update();
   }
 
   // Active day
