@@ -17,6 +17,7 @@ class AppTheme {
         listTileTheme: _lightListTileThemeData,
         textButtonTheme: _lightTextButtonThemeData,
         elevatedButtonTheme: _lightElevatedButtonThemeData,
+        floatingActionButtonTheme: _lightFloatingActionButtonThemeData,
       );
 
   static ThemeData get dark => ThemeData(
@@ -30,6 +31,7 @@ class AppTheme {
         listTileTheme: _darkListTileThemeData,
         textButtonTheme: _darkTextButtonThemeData,
         elevatedButtonTheme: _darkElevatedButtonThemeData,
+        floatingActionButtonTheme: _darkFloatingActionButtonThemeData,
       );
 
   // Application physics
@@ -236,5 +238,28 @@ class AppTheme {
         ),
       ),
     ),
+  );
+
+  // Floating button
+  static final FloatingActionButtonThemeData
+      _lightFloatingActionButtonThemeData = FloatingActionButtonThemeData(
+    extendedSizeConstraints: BoxConstraints.tightFor(
+      height: 40 * LayoutConstant.scaleFactor,
+      width: Get.width - 64 * LayoutConstant.scaleFactor,
+    ),
+    backgroundColor: AppColor.lightPrimary,
+    foregroundColor: AppColor.lightWhite,
+    extendedTextStyle: AppStyle.style6,
+  );
+
+  static final FloatingActionButtonThemeData
+      _darkFloatingActionButtonThemeData = FloatingActionButtonThemeData(
+    extendedSizeConstraints: BoxConstraints.tightFor(
+      height: 40 * LayoutConstant.scaleFactor,
+      width: Get.width - 64 * LayoutConstant.scaleFactor,
+    ),
+    backgroundColor: AppColor.darkPrimary,
+    foregroundColor: AppColor.lightWhite,
+    extendedTextStyle: AppStyle.style6,
   );
 }

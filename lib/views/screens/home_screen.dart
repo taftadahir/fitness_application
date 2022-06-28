@@ -1,7 +1,9 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
 import 'package:fitness_application/controllers/program_controller.dart';
 import 'package:fitness_application/models/program.dart';
+import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/custom_program_card_component.dart';
 import 'package:fitness_application/views/components/program_card_component.dart';
 import 'package:fitness_application/views/screens/drawer_screen.dart';
@@ -19,32 +21,20 @@ class HomeScreen extends StatelessWidget {
     drawer.DrawerController drawerController1 = Get.find();
 
     Scaffold home = Scaffold(
+      appBar: AppbarComponent(
+        leading: IconButton(
+          icon: const Icon(Icons.scatter_plot_rounded),
+          onPressed: drawerController1.openDrawer,
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: Column(
         children: [
-          // App Bar
-          Padding(
-            padding: EdgeInsets.only(
-              top: LayoutConstant.screenPadding,
-              left: LayoutConstant.screenPadding,
-              right: LayoutConstant.screenPadding,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: drawerController1.openDrawer,
-                  icon: const Icon(Icons.scatter_plot_rounded),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.person),
-                ),
-              ],
-            ),
-          ),
-
           // Body
           Expanded(
             child: ListView(
