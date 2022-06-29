@@ -1,6 +1,7 @@
 import 'package:fitness_application/controllers/drawer_controller.dart';
 import 'package:fitness_application/controllers/onboarding_controller.dart';
 import 'package:fitness_application/controllers/program_controller.dart';
+import 'package:fitness_application/controllers/register_controller.dart';
 import 'package:get/get.dart';
 
 class AppBinding extends Bindings {
@@ -17,6 +18,10 @@ class AppBinding extends Bindings {
     );
     Get.lazyPut(
       () => OnboardingController(),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => RegisterController(),
       fenix: true,
     );
   }

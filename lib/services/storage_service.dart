@@ -17,4 +17,16 @@ class StorageService {
 
   static set isFirstTimeOpeningApp(bool isFirstTimeOpeningApp) => _storage
       .write(StorageConstant.isFirstTimeOpeningApp, isFirstTimeOpeningApp);
+
+  // Firstname
+  static String? get firstname => _storage.read(StorageConstant.firstname);
+
+  static set firstname(String? firstname) =>
+      _storage.write(StorageConstant.firstname, firstname);
+
+  // Lastname
+  static String? get lastname => _storage.read(StorageConstant.lastname);
+
+  static set lastname(String? lastname) =>
+      _storage.write(StorageConstant.lastname, lastname);
 }

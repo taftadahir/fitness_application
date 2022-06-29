@@ -2,11 +2,11 @@ import 'package:fitness_application/constants/layout_constant.dart';
 import 'package:flutter/material.dart';
 
 class AppbarComponent extends StatelessWidget implements PreferredSizeWidget {
-  final Widget leading;
+  final Widget? leading;
   final List<Widget>? actions;
   const AppbarComponent({
     Key? key,
-    required this.leading,
+    this.leading,
     this.actions,
   }) : super(key: key);
 
@@ -23,7 +23,11 @@ class AppbarComponent extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          leading,
+          leading == null
+              ? const SizedBox(
+                  width: 0,
+                )
+              : leading!,
           actions == null
               ? const SizedBox(
                   width: 0,

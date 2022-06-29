@@ -18,6 +18,8 @@ class AppTheme {
         textButtonTheme: _lightTextButtonThemeData,
         elevatedButtonTheme: _lightElevatedButtonThemeData,
         floatingActionButtonTheme: _lightFloatingActionButtonThemeData,
+        inputDecorationTheme: _lightInputDecorationTheme,
+        splashColor: AppColor.lightPrimary,
       );
 
   static ThemeData get dark => ThemeData(
@@ -32,6 +34,8 @@ class AppTheme {
         textButtonTheme: _darkTextButtonThemeData,
         elevatedButtonTheme: _darkElevatedButtonThemeData,
         floatingActionButtonTheme: _darkFloatingActionButtonThemeData,
+        inputDecorationTheme: _darkInputDecorationTheme,
+        splashColor: AppColor.darkPrimary,
       );
 
   // Application physics
@@ -261,5 +265,50 @@ class AppTheme {
     backgroundColor: AppColor.darkPrimary,
     foregroundColor: AppColor.lightWhite,
     extendedTextStyle: AppStyle.style6,
+  );
+
+  // Form Input
+  static final InputDecorationTheme _lightInputDecorationTheme =
+      InputDecorationTheme(
+    floatingLabelBehavior: FloatingLabelBehavior.auto,
+    border: _outlineInputBorder,
+    enabledBorder: _outlineInputBorder,
+    focusedBorder: _outlineInputBorder,
+    floatingLabelStyle: AppStyle.style8.copyWith(
+      color: AppColor.lightBlackLight,
+    ),
+    labelStyle: AppStyle.style8.copyWith(
+      color: AppColor.lightBlackLight,
+    ),
+    hintStyle: AppStyle.style8.copyWith(
+      color: AppColor.lightBlackLight,
+    ),
+  );
+
+  static final InputDecorationTheme _darkInputDecorationTheme =
+      InputDecorationTheme(
+    floatingLabelBehavior: FloatingLabelBehavior.auto,
+    border: _outlineInputBorder,
+    enabledBorder: _outlineInputBorder,
+    focusedBorder: _outlineInputBorder,
+    floatingLabelStyle: AppStyle.style8.copyWith(
+      color: AppColor.darkWhiteLight,
+    ),
+    labelStyle: AppStyle.style8.copyWith(
+      color: AppColor.darkWhiteLight,
+    ),
+    hintStyle: AppStyle.style8.copyWith(
+      color: AppColor.darkWhiteLight,
+    ),
+  );
+
+  static final OutlineInputBorder _outlineInputBorder = OutlineInputBorder(
+    borderSide: BorderSide(
+      color: AppColor.darkWhiteLight,
+      width: 1.0,
+    ),
+    borderRadius: BorderRadius.circular(
+      8 * LayoutConstant.scaleFactor,
+    ),
   );
 }
