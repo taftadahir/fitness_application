@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:fitness_application/models/exercise.dart';
 import 'package:fitness_application/models/program.dart';
 import 'package:fitness_application/models/workout.dart';
 import 'package:get/get.dart';
@@ -22,6 +25,13 @@ class ProgramController extends GetxController {
 
   // used to show image for the program in program detail screen
   int? _activeImageIndex = 0;
+
+  // Exercise for exercise screen
+  Exercise? exercise = Exercise(
+      sysId: 'sysId',
+      name: 'Push Up',
+      details:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. ');
 
   // List of recommended programs
   List<Program> recommendedPrograms = List.generate(
