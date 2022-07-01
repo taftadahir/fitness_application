@@ -9,4 +9,5 @@ class RouteConstant {
   static const String favoriteScreen = '/favorite';
   static const String customProgramScreen = '/custom_program';
   static const String customProgramReorderScreen = '/custom_program_reorder';
+  static const String resultScreen = '/result';
 }

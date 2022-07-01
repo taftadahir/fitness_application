@@ -77,17 +77,18 @@ class ProgramController extends GetxController
   List<Workout> workouts = List.generate(
     10,
     (index) => Workout(
-        sysId: 'SysID$index',
-        programSysId: 'programSysId',
-        exerciseSysId: 'exerciseSysId',
-        reps: 10 * index,
-        weight: 5 * index,
-        restTime: 300,
-        status: WorkoutStatus.skipped,
-        type: index < 3
-            ? WorkoutType.warmUp
-            : (index > 7 ? WorkoutType.coolDown : WorkoutType.workout),
-        day: 15),
+      sysId: 'SysID$index',
+      programSysId: 'programSysId',
+      exerciseSysId: 'exerciseSysId',
+      reps: 10 * index,
+      weight: 5 * index,
+      restTime: 300,
+      status: WorkoutStatus.completed,
+      type: index < 3
+          ? WorkoutType.warmUp
+          : (index > 7 ? WorkoutType.coolDown : WorkoutType.workout),
+      day: 15,
+    ),
   );
 
   // List of exercises

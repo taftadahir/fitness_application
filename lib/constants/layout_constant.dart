@@ -13,6 +13,7 @@ class LayoutConstant {
   static double spaceBetweenElements = 16 * scaleFactor;
   static double appbarHeight = 40 * scaleFactor;
   static double spaceBetweenWorkoutDetail = 24 * scaleFactor;
+  static double circularTimerRadius = (Get.width - 2 * screenPadding) * 2 / 5;
 
   // Dot component
   static double inactiveDotSize = 8 * scaleFactor;

@@ -8,6 +8,7 @@ import 'package:fitness_application/views/screens/onboarding_screen.dart';
 import 'package:fitness_application/views/screens/program_detail_screen.dart';
 import 'package:fitness_application/views/screens/program_screen.dart';
 import 'package:fitness_application/views/screens/register_screen.dart';
+import 'package:fitness_application/views/screens/result_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoute {
@@ -49,8 +50,12 @@ class AppRoute {
           name: RouteConstant.customProgramReorderScreen,
           page: () => const CustomProgramReorderScreen(),
         ),
+        GetPage(
+          name: RouteConstant.resultScreen,
+          page: () => const ResultScreen(),
+        ),
       ];
 
   // Initial app route
-  static String get initialRoute => RouteConstant.customProgramReorderScreen;
+  static String get initialRoute => RouteConstant.resultScreen;
 }
