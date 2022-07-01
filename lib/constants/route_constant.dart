@@ -10,4 +10,5 @@ class RouteConstant {
   static const String customProgramScreen = '/custom_program';
   static const String customProgramReorderScreen = '/custom_program_reorder';
   static const String resultScreen = '/result';
+  static const String restScreen = '/rest';
 }

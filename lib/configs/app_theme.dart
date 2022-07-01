@@ -47,10 +47,12 @@ class AppTheme {
   // Icon theme
   static final IconThemeData _lightIconThemeData = IconThemeData(
     color: AppColor.lightBlackLight,
+    // size: 16 * LayoutConstant.scaleFactor,
   );
 
   static final IconThemeData _darkIconThemeData = IconThemeData(
     color: AppColor.darkWhiteLight,
+    // size: 16 * LayoutConstant.scaleFactor,
   );
 
   // App bar theme
@@ -59,6 +61,7 @@ class AppTheme {
     elevation: 0,
     iconTheme: IconThemeData(
       color: AppColor.lightBlackLight,
+      // size: 16 * LayoutConstant.scaleFactor,
     ),
   );
 
@@ -67,6 +70,7 @@ class AppTheme {
     elevation: 0,
     iconTheme: IconThemeData(
       color: AppColor.darkWhiteLight,
+      // size: 16 * LayoutConstant.scaleFactor,
     ),
   );
 

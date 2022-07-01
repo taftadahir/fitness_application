@@ -3,6 +3,7 @@ import 'package:fitness_application/controllers/onboarding_controller.dart';
 import 'package:fitness_application/controllers/program_controller.dart';
 import 'package:fitness_application/controllers/register_controller.dart';
 import 'package:fitness_application/controllers/reorder_controller.dart';
+import 'package:fitness_application/controllers/timer_controller.dart';
 import 'package:get/get.dart';
 
 class AppBinding extends Bindings {
@@ -27,6 +28,10 @@ class AppBinding extends Bindings {
     );
     Get.lazyPut(
       () => ReorderController(),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => TimerController(),
       fenix: true,
     );
   }
