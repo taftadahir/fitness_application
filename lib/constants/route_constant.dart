@@ -7,4 +7,5 @@ class RouteConstant {
   static const String registerScreen = '/register';
   static const String exerciseScreen = '/exercise';
   static const String favoriteScreen = '/favorite';
+  static const String customProgramScreen = '/custom_program';
 }

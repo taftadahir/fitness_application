@@ -9,8 +9,8 @@ import 'package:fitness_application/views/components/workout_card_component.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProgramScreen extends StatelessWidget {
-  const ProgramScreen({Key? key}) : super(key: key);
+class CustomProgramScreen extends StatelessWidget {
+  const CustomProgramScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class ProgramScreen extends StatelessWidget {
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(EvaIcons.infoOutline),
+            icon: const Icon(EvaIcons.shuffle2Outline),
             onPressed: () {},
           ),
         ],
@@ -49,9 +49,9 @@ class ProgramScreen extends StatelessWidget {
         label: const Text('Start'),
       ),
       body: GetBuilder<ProgramController>(
-        builder: (controller) => controller.program == null
+        builder: (controller) => controller.customProgram == null
             ? Text(
-                'No program',
+                'No custom program',
                 textAlign: TextAlign.center,
                 style: context.theme.textTheme.titleLarge,
               )
@@ -68,7 +68,7 @@ class ProgramScreen extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        "CORE + ABS",
+                        controller.customProgram!.name,
                         textAlign: TextAlign.center,
                         style: context.theme.textTheme.titleLarge,
                       ),
@@ -97,6 +97,7 @@ class ProgramScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        plusButton(context, () {}),
                       ],
                     ),
                   ),
@@ -112,9 +113,19 @@ class ProgramScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text(
-                            'Warm Up',
-                            style: context.theme.textTheme.titleMedium,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Warm Up',
+                                style: context.theme.textTheme.titleMedium,
+                              ),
+                              plusButton(
+                                context,
+                                () {},
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 16 * LayoutConstant.scaleFactor,
@@ -135,9 +146,19 @@ class ProgramScreen extends StatelessWidget {
                           SizedBox(
                             height: 16 * LayoutConstant.scaleFactor,
                           ),
-                          Text(
-                            'Workouts',
-                            style: context.theme.textTheme.titleMedium,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Workouts',
+                                style: context.theme.textTheme.titleMedium,
+                              ),
+                              plusButton(
+                                context,
+                                () {},
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 16 * LayoutConstant.scaleFactor,
@@ -158,9 +179,19 @@ class ProgramScreen extends StatelessWidget {
                           SizedBox(
                             height: 16 * LayoutConstant.scaleFactor,
                           ),
-                          Text(
-                            'Cool down',
-                            style: context.theme.textTheme.titleMedium,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Cool down',
+                                style: context.theme.textTheme.titleMedium,
+                              ),
+                              plusButton(
+                                context,
+                                () {},
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 16 * LayoutConstant.scaleFactor,
@@ -187,6 +218,33 @@ class ProgramScreen extends StatelessWidget {
                   ),
                 ],
               ),
+      ),
+    );
+  }
+
+  Widget plusButton(
+    BuildContext context,
+    void Function()? onTap,
+  ) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: AppTheme.animationDuration,
+        height: LayoutConstant.daySize,
+        width: LayoutConstant.daySize,
+        padding: EdgeInsets.all(4 * LayoutConstant.scaleFactor),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: context.theme.cardColor,
+            width: LayoutConstant.scaleFactor,
+          ),
+          shape: BoxShape.circle,
+        ),
+        child: const Center(
+          child: FittedBox(
+            child: Icon(EvaIcons.plus),
+          ),
+        ),
       ),
     );
   }
