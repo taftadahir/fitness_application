@@ -5,15 +5,25 @@ import 'package:get/get.dart';
 class RegisterController extends GetxController {
   late TextEditingController firstnameController, lastnameController;
   late String firstname, lastname;
+  late bool _profileReadOnly;
   final GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
     super.onInit();
-    firstnameController = TextEditingController();
-    lastnameController = TextEditingController();
+    firstnameController = TextEditingController(text: StorageService.firstname);
+    lastnameController = TextEditingController(text: StorageService.lastname);
     firstname = '';
     lastname = '';
+    _profileReadOnly = true;
+  }
+
+  // Profile read only
+  bool get profileReadOnly => _profileReadOnly;
+  set profileReadOnly(bool profileReadOnly) {
+    // TODO: Update the profile read only
+    _profileReadOnly = profileReadOnly;
+    update();
   }
 
   void register() {
