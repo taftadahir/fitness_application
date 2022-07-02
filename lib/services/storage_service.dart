@@ -12,11 +12,11 @@ class StorageService {
       _storage.write(StorageConstant.isDarkMode, isDarkMode);
 
   // TODO: isFirstTimeOpeningApp
-  static bool get isFirstTimeOpeningApp =>
-      _storage.read(StorageConstant.isFirstTimeOpeningApp) ?? true;
+  // static bool get isFirstTimeOpeningApp =>
+  //     _storage.read(StorageConstant.isFirstTimeOpeningApp) ?? true;
 
-  static set isFirstTimeOpeningApp(bool isFirstTimeOpeningApp) => _storage
-      .write(StorageConstant.isFirstTimeOpeningApp, isFirstTimeOpeningApp);
+  // static set isFirstTimeOpeningApp(bool isFirstTimeOpeningApp) => _storage
+  //     .write(StorageConstant.isFirstTimeOpeningApp, isFirstTimeOpeningApp);
 
   // Firstname
   static String? get firstname => _storage.read(StorageConstant.firstname);
@@ -29,4 +29,7 @@ class StorageService {
 
   static set lastname(String? lastname) =>
       _storage.write(StorageConstant.lastname, lastname);
+
+  // Storage getter
+  static get storage => _storage;
 }

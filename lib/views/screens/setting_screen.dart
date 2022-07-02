@@ -1,5 +1,5 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:fitness_application/configs/app_color.dart';
+import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
 import 'package:fitness_application/controllers/setting_controller.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
@@ -24,6 +24,7 @@ class SettingScreen extends StatelessWidget {
         label: const Text('Reset all programs'),
       ),
       body: ListView(
+        physics: AppTheme.scrollPhysic,
         padding: EdgeInsets.symmetric(
           horizontal: LayoutConstant.screenPadding,
         ),

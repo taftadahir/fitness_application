@@ -20,6 +20,15 @@ class AppTheme {
         floatingActionButtonTheme: _lightFloatingActionButtonThemeData,
         inputDecorationTheme: _lightInputDecorationTheme,
         splashColor: AppColor.lightPrimary,
+        brightness: Brightness.light,
+        switchTheme: SwitchThemeData(
+          trackColor: MaterialStateProperty.all(
+            AppColor.lightWhiteLight,
+          ),
+          thumbColor: MaterialStateProperty.all(
+            AppColor.lightPrimary,
+          ),
+        ),
       );
 
   static ThemeData get dark => ThemeData(
@@ -36,6 +45,15 @@ class AppTheme {
         floatingActionButtonTheme: _darkFloatingActionButtonThemeData,
         inputDecorationTheme: _darkInputDecorationTheme,
         splashColor: AppColor.darkPrimary,
+        brightness: Brightness.dark,
+        switchTheme: SwitchThemeData(
+          trackColor: MaterialStateProperty.all(
+            AppColor.darkBlackLight,
+          ),
+          thumbColor: MaterialStateProperty.all(
+            AppColor.darkPrimary,
+          ),
+        ),
       );
 
   // Application physics

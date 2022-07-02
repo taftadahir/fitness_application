@@ -1,3 +1,4 @@
+import 'package:fitness_application/constants/storage_constant.dart';
 import 'package:fitness_application/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -5,7 +6,7 @@ import 'package:get/get.dart';
 
 class ThemeService {
   static ThemeMode get theme {
-    if (StorageService.isFirstTimeOpeningApp) {
+    if (StorageService.storage.read(StorageConstant.isDarkMode) == null) {
       final isLight = SchedulerBinding.instance.window.platformBrightness ==
           Brightness.light;
       return isLight ? ThemeMode.light : ThemeMode.dark;
