@@ -17,7 +17,7 @@ class WorkoutCardComponent extends StatelessWidget {
     IconData? iconDataStatus;
     List<Widget> details = [];
 
-    // WOrkout status
+    // Workout status
     if (workout.status == WorkoutStatus.completed) {
       iconDataStatus = Icons.done_rounded;
     } else if (workout.status == WorkoutStatus.reorder) {
@@ -60,6 +60,7 @@ class WorkoutCardComponent extends StatelessWidget {
         ),
       ]);
     }
+    
     if (workout.restTime != null) {
       details.add(Text(
         workout.restTime != null

@@ -79,9 +79,10 @@ class ProgramController extends GetxController
     (index) => Workout(
       sysId: 'SysID$index',
       programSysId: 'programSysId',
-      exerciseSysId: 'exerciseSysId',
+      exerciseSysId: 'EX$index',
       reps: 10 * index,
       weight: 5 * index,
+      time: 100 * index,
       restTime: 300,
       status: WorkoutStatus.completed,
       type: index < 3
@@ -93,10 +94,10 @@ class ProgramController extends GetxController
 
   // List of exercises
   List<Exercise> exercises = List.generate(
-    10,
+    12,
     (index) => Exercise(
-      sysId: 'sysId',
-      name: 'Push Up',
+      sysId: 'EX$index',
+      name: 'Push Up$index',
       images:
           '["front_lever.png", "front_lever.png", "front_lever.png", "front_lever.png"]',
     ),
