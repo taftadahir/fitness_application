@@ -39,9 +39,12 @@ class AddWorkoutScreen extends StatelessWidget {
           SizedBox(
             height: 24 * LayoutConstant.scaleFactor,
           ),
-          Text(
-            controller.sysId == null ? "Add new workout" : "Update workout",
-            style: context.theme.textTheme.titleLarge,
+          Center(
+            child: Text(
+              controller.sysId == null ? "Add new workout" : "Update workout",
+              textAlign: TextAlign.center,
+              style: context.theme.textTheme.titleLarge,
+            ),
           ),
         ];
 

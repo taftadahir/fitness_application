@@ -1,4 +1,5 @@
 import 'package:fitness_application/constants/route_constant.dart';
+import 'package:fitness_application/views/screens/add_workout_choose_exercise_screen.dart';
 import 'package:fitness_application/views/screens/add_workout_screen.dart';
 import 'package:fitness_application/views/screens/custom_program_reorder_screen.dart';
 import 'package:fitness_application/views/screens/custom_program_screen.dart';
@@ -79,8 +80,13 @@ class AppRoute {
           name: RouteConstant.addWorkoutScreen,
           page: () => const AddWorkoutScreen(),
         ),
+        GetPage(
+          name: RouteConstant.addWorkoutChooseExerciseScreen,
+          page: () => const AddWorkoutChooseExerciseScreen(),
+        ),
       ];
 
   // Initial app route
-  static String get initialRoute => RouteConstant.addWorkoutScreen;
+  static String get initialRoute =>
+      RouteConstant.addWorkoutChooseExerciseScreen;
 }

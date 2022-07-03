@@ -85,43 +85,48 @@ class FavoriteScreen extends StatelessWidget {
               height: 24 * LayoutConstant.scaleFactor,
             ),
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: LayoutConstant.screenPadding,
-                ),
-                child: TabBarView(
-                  controller: controller.tabController,
-                  children: [
-                    GridView.builder(
-                      physics: AppTheme.scrollPhysic,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1,
-                        crossAxisSpacing: LayoutConstant.screenPadding,
-                        mainAxisSpacing: LayoutConstant.screenPadding,
-                      ),
-                      itemCount: controller.exercises.length,
-                      itemBuilder: (context, index) {
-                        return ExerciseCardComponent(
-                          exercise: controller.exercises[index],
-                        );
-                      },
+              child: TabBarView(
+                controller: controller.tabController,
+                children: [
+                  GridView.builder(
+                    padding: EdgeInsets.only(
+                      left: LayoutConstant.screenPadding,
+                      right: LayoutConstant.screenPadding,
+                      bottom: LayoutConstant.screenPadding,
                     ),
-                    ListView(
-                      physics: AppTheme.scrollPhysic,
-                      children: controller.allPrograms
-                          .map(
-                            (program) => Container(
-                              margin: EdgeInsets.symmetric(
-                                vertical: 4 * LayoutConstant.scaleFactor,
-                              ),
-                              child: ProgramCardComponent(program: program),
+                    physics: AppTheme.scrollPhysic,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1,
+                      crossAxisSpacing: LayoutConstant.screenPadding,
+                      mainAxisSpacing: LayoutConstant.screenPadding,
+                    ),
+                    itemCount: controller.exercises.length,
+                    itemBuilder: (context, index) {
+                      return ExerciseCardComponent(
+                        exercise: controller.exercises[index],
+                      );
+                    },
+                  ),
+                  ListView(
+                    padding: EdgeInsets.only(
+                      left: LayoutConstant.screenPadding,
+                      right: LayoutConstant.screenPadding,
+                      bottom: LayoutConstant.screenPadding,
+                    ),
+                    physics: AppTheme.scrollPhysic,
+                    children: controller.allPrograms
+                        .map(
+                          (program) => Container(
+                            margin: EdgeInsets.symmetric(
+                              vertical: 4 * LayoutConstant.scaleFactor,
                             ),
-                          )
-                          .toList(),
-                    ),
-                  ],
-                ),
+                            child: ProgramCardComponent(program: program),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ],
               ),
             ),
           ],

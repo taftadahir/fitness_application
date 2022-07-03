@@ -8,6 +8,17 @@ class AddWorkoutController extends GetxController {
   Exercise? _exercise = Exercise(sysId: 'sysId', name: 'name');
   final GlobalKey<FormState> addWorkoutFormKey = GlobalKey<FormState>();
 
+  // List of exercises
+  List<Exercise> exercises = List.generate(
+    10,
+    (index) => Exercise(
+      sysId: 'sysId',
+      name: 'Push Up',
+      images:
+          '["front_lever.png", "front_lever.png", "front_lever.png", "front_lever.png"]',
+    ),
+  );
+
   // Exercise
   Exercise? get exercise => _exercise;
   set exercise(Exercise? exercise) {

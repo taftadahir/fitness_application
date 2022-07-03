@@ -7,10 +7,12 @@ import 'package:get/get.dart';
 
 class ExerciseCardComponent extends StatelessWidget {
   final Exercise exercise;
+  final void Function()? onTap;
 
   const ExerciseCardComponent({
     Key? key,
     required this.exercise,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,7 @@ class ExerciseCardComponent extends StatelessWidget {
         ? "[]"
         : exercise.images!) as List<dynamic>;
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(LayoutConstant.cardRadius),
