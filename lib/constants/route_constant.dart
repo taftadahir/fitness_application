@@ -14,4 +14,5 @@ class RouteConstant {
   static const String workoutOnScreen = '/workout_on';
   static const String settingScreen = '/setting';
   static const String profileScreen = '/profile';
+  static const String addWorkoutScreen = '/add_workout';
 }

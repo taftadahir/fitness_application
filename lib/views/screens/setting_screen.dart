@@ -32,17 +32,9 @@ class SettingScreen extends StatelessWidget {
           SizedBox(
             height: 24 * LayoutConstant.scaleFactor,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: LayoutConstant.screenPadding,
-            ),
-            child: Center(
-              child: Text(
-                "Setting",
-                textAlign: TextAlign.center,
-                style: context.theme.textTheme.titleLarge,
-              ),
-            ),
+          Text(
+            "Setting",
+            style: context.theme.textTheme.titleLarge,
           ),
           SizedBox(
             height: 24 * LayoutConstant.scaleFactor,
