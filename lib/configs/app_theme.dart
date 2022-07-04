@@ -62,6 +62,9 @@ class AppTheme {
   // Animation duration
   static Duration get animationDuration => const Duration(milliseconds: 300);
 
+  // Snackbar duration
+  static Duration get snackbarDuration => const Duration(seconds: 5);
+
   // Icon theme
   static final IconThemeData _lightIconThemeData = IconThemeData(
     color: AppColor.lightBlackLight,
