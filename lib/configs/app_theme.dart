@@ -29,6 +29,8 @@ class AppTheme {
             AppColor.lightPrimary,
           ),
         ),
+        bottomSheetTheme: _lightBottomSheetThemeData,
+        radioTheme: _lightRadioThemeData,
       );
 
   static ThemeData get dark => ThemeData(
@@ -54,6 +56,8 @@ class AppTheme {
             AppColor.darkPrimary,
           ),
         ),
+        bottomSheetTheme: _darkBottomSheetThemeData,
+        radioTheme: _darkRadioThemeData,
       );
 
   // Application physics
@@ -335,5 +339,31 @@ class AppTheme {
     borderRadius: BorderRadius.circular(
       8 * LayoutConstant.scaleFactor,
     ),
+  );
+
+  // Bottom sheet
+  static final BottomSheetThemeData _lightBottomSheetThemeData =
+      BottomSheetThemeData(
+    backgroundColor: AppColor.lightWhite,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(LayoutConstant.cardRadius),
+    ),
+  );
+
+  static final BottomSheetThemeData _darkBottomSheetThemeData =
+      BottomSheetThemeData(
+    backgroundColor: AppColor.darkBlack,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(LayoutConstant.cardRadius),
+    ),
+  );
+
+  // Radio
+  static final RadioThemeData _lightRadioThemeData = RadioThemeData(
+    fillColor: MaterialStateProperty.all(AppColor.lightPrimary),
+  );
+
+  static final RadioThemeData _darkRadioThemeData = RadioThemeData(
+    fillColor: MaterialStateProperty.all(AppColor.lightPrimary),
   );
 }
