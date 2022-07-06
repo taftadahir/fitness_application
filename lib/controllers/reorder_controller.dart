@@ -29,7 +29,7 @@ class ReorderController extends GetxController {
         reps: 10 * index,
         weight: 5 * index,
         restTime: 300,
-        status: WorkoutStatus.reorder,
+        status: WorkoutStatus.skipped,
         type: index < 3
             ? WorkoutType.warmUp
             : (index > 7 ? WorkoutType.coolDown : WorkoutType.workout),

@@ -20,9 +20,11 @@ class WorkoutCardComponent extends StatelessWidget {
     // Workout status
     if (workout.status == WorkoutStatus.completed) {
       iconDataStatus = Icons.done_rounded;
-    } else if (workout.status == WorkoutStatus.reorder) {
-      iconDataStatus = Icons.short_text_rounded;
-    } else {
+    }
+    // else if (workout.status == WorkoutStatus.reorder) {
+    //   iconDataStatus = Icons.short_text_rounded;
+    // }
+    else {
       iconDataStatus = EvaIcons.minus;
     }
 
@@ -60,7 +62,7 @@ class WorkoutCardComponent extends StatelessWidget {
         ),
       ]);
     }
-    
+
     if (workout.restTime != null) {
       details.add(Text(
         workout.restTime != null
