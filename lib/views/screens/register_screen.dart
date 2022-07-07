@@ -1,10 +1,10 @@
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
 import 'package:fitness_application/controllers/register_controller.dart';
+import 'package:fitness_application/services/theme_service.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/button_component.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -12,13 +12,15 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLight =
-        SchedulerBinding.instance.window.platformBrightness == Brightness.light;
+    final isLight = ThemeService.theme == ThemeMode.light;
     return Scaffold(
       appBar: AppbarComponent(
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              // TODO: Go to Home screen
+              // TODO: Drawer should be closed
+            },
             child: const Text('Do It Later'),
           ),
         ],

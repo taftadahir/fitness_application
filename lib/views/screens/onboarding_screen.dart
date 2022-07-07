@@ -1,11 +1,14 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
+import 'package:fitness_application/constants/route_constant.dart';
 import 'package:fitness_application/controllers/onboarding_controller.dart';
 import 'package:fitness_application/views/components/button_component.dart';
 import 'package:fitness_application/views/components/dot_component.dart';
 import 'package:fitness_application/views/components/onboarding_component.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness_application/controllers/drawer_controller.dart'
+    as drawer;
 import 'package:get/get.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -97,8 +100,15 @@ class OnboardingScreen extends StatelessWidget {
                 ),
                 ButtonComponent(
                     onPressed: () {
-                      if (!(controller.activeIndex ==
-                          controller.datas.length - 1)) {
+                      if (controller.activeIndex ==
+                          controller.datas.length - 1) {
+                        // TODO: Close drawer
+                        drawer.DrawerController drawerController = Get.find();
+                        drawerController.closeDrawer();
+
+                        // TODO: Go to Home screen
+                        Get.offNamed(RouteConstant.homeScreen);
+                      } else {
                         pageController.nextPage(
                           duration: AppTheme.animationDuration,
                           curve: Curves.bounceIn,

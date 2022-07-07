@@ -1,5 +1,8 @@
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
+import 'package:fitness_application/constants/route_constant.dart';
+import 'package:fitness_application/controllers/onboarding_controller.dart';
+import 'package:fitness_application/models/drawer_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitness_application/controllers/drawer_controller.dart'
@@ -11,7 +14,7 @@ class DrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     drawer.DrawerController controller = Get.find();
-    
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: AppTheme.scrollPhysic,
@@ -52,7 +55,17 @@ class DrawerScreen extends StatelessWidget {
                         item.element.name,
                         style: context.theme.textTheme.headlineLarge,
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        if (item.element == DrawerElement.onboarding) {
+                          // TODO: Set Onboarding activeIndex to [0]
+                          OnboardingController onboardingController =
+                              Get.find();
+                          onboardingController.activeIndex = 0;
+
+                          // TODO: Go to Onboarding screen
+                          Get.offNamed(RouteConstant.onboardingScreen);
+                        }
+                      },
                     ),
                   ),
                 )

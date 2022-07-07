@@ -1,7 +1,6 @@
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
 import 'package:fitness_application/controllers/home_controller.dart';
-import 'package:fitness_application/controllers/program_controller.dart';
 import 'package:fitness_application/models/program.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/custom_program_card_component.dart';
@@ -17,7 +16,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProgramController programController = Get.find();
     drawer.DrawerController drawerController1 = Get.find();
 
     Scaffold home = Scaffold(

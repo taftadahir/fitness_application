@@ -1,3 +1,5 @@
+import 'package:fitness_application/constants/route_constant.dart';
+import 'package:fitness_application/controllers/onboarding_controller.dart';
 import 'package:fitness_application/services/storage_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -27,10 +29,17 @@ class RegisterController extends GetxController {
   }
 
   void register() {
+    // Save user data
     registerFormKey.currentState!.save();
     StorageService.firstname = firstname;
     StorageService.lastname = lastname;
-    update();
+
+    // TODO: Set Onboarding activeIndex to [0]
+    OnboardingController onboardingController = Get.find();
+    onboardingController.activeIndex = 0;
+
+    // TODO: Go to Onboarding screen
+    Get.offNamed(RouteConstant.onboardingScreen);
   }
 
   @override

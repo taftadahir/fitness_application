@@ -92,5 +92,5 @@ class AppRoute {
       ];
 
   // Initial app route
-  static String get initialRoute => RouteConstant.homeScreen;
+  static String get initialRoute => RouteConstant.registerScreen;
 }
