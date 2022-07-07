@@ -1,4 +1,8 @@
+import 'dart:async';
 import 'package:fitness_application/constants/database_constant.dart';
+import 'package:fitness_application/database/exercises.dart';
+import 'package:fitness_application/database/programs.dart';
+import 'package:fitness_application/database/workouts.dart';
 import 'package:fitness_application/models/exercise.dart';
 import 'package:fitness_application/models/model.dart';
 import 'package:fitness_application/models/program.dart';
@@ -25,15 +29,17 @@ class DatabaseHelper {
     return await openDatabase(
       dbPath,
       version: DatabaseConstant.version,
-      onCreate: _createDatabase,
+      onCreate: _onCreate,
+      onConfigure: _onConfigure,
     );
   }
 
+  Future _onConfigure(Database db) async {}
+
   // Create database
-  Future _createDatabase(Database db, int version) async {
+  Future _onCreate(Database db, int version) async {
     // Types
     const idType = "INTEGER PRIMARY KEY AUTOINCREMENT";
-    // const boolType = "BOOLEAN NOT NULL";
     const numberType = "INTEGER";
     const textType = "TEXT";
 
@@ -79,28 +85,27 @@ class DatabaseHelper {
       ${WorkoutDetail.restTime} $numberType
     )
     ''');
-  }
 
-  // Datas to insert on the database
-  List<Program> get programs {
-    // These properties to delete
-    String? images =
-        '["front_lever.png", "front_lever.png", "front_lever.png", "front_lever.png"]';
+    // Create programs
+    Batch programBatch = db.batch();
+    for (var program in programs) {
+      programBatch.insert(Program.table, program.toJson());
+    }
+    programBatch.commit();
 
-    String details =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget nam in sit. Ultricies vehicula montes, neque, pulvinar vulputate enim felis, porttitor amet. Massa, sagittis bibendum ut eu lectus maecenas. At sed maecenas a dignissim lectus.';
-    return [];
-  }
+    // Create exercises
+    Batch exerciseBatch = db.batch();
+    for (var exercise in exercises) {
+      exerciseBatch.insert(Exercise.table, exercise.toJson());
+    }
+    exerciseBatch.commit();
 
-  List<Exercise> get exercises {
-    String images = '["front_lever.png", "front_lever.png"]';
-    String details =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget nam in sit. Ultricies vehicula montes, neque, pulvinar vulputate enim felis, porttitor amet. Massa, sagittis bibendum ut eu lectus maecenas. At sed maecenas a dignissim lectus.';
-    return [];
-  }
-
-  List<Workout> get workouts {
-    return [];
+    // Create workouts
+    Batch workoutBatch = db.batch();
+    for (var workout in workouts) {
+      workoutBatch.insert(Workout.table, workout.toJson());
+    }
+    workoutBatch.commit();
   }
 
   // Insert data
@@ -135,7 +140,7 @@ class DatabaseHelper {
   }
 
   // Read by sys id
-  Future<Model> readBySysId(String table, String sysId) async {
+  Future<Model?> readBySysId(String table, String sysId) async {
     final db = await instance.database;
 
     final result = await db.query(
@@ -143,9 +148,22 @@ class DatabaseHelper {
       where: 'sys_id = ?',
       whereArgs: [sysId],
     );
-    return Model.fromJson(
-      result.first,
-    );
+
+    if (result.isNotEmpty) {
+      if (table == Program.table) {
+        return Program.fromJson(result.first);
+      }
+      if (table == Exercise.table) {
+        return Exercise.fromJson(result.first);
+      }
+      if (table == Workout.table) {
+        return Workout.fromJson(result.first);
+      }
+      return Model.fromJson(
+        result.first,
+      );
+    }
+    return null;
   }
 
   // Read all programs
@@ -154,6 +172,19 @@ class DatabaseHelper {
 
     final result = await db.query(
       Program.table,
+    );
+    return result.map((json) => Program.fromJson(json)).toList();
+  }
+
+  // Read all programs in sysids
+  Future<List<Program>> readAllProgramsInSysId(List<String> sysIds) async {
+    final db = await instance.database;
+
+    final result = await db.query(
+      Program.table,
+      where:
+          'sys_id IN (${List.generate(sysIds.length, (index) => '?').join(',')})',
+      whereArgs: sysIds,
     );
     return result.map((json) => Program.fromJson(json)).toList();
   }

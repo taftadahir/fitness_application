@@ -1,6 +1,6 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
+import 'package:fitness_application/controllers/home_controller.dart';
 import 'package:fitness_application/controllers/program_controller.dart';
 import 'package:fitness_application/models/program.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
@@ -33,95 +33,122 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Body
-          Expanded(
-            child: ListView(
-              physics: AppTheme.scrollPhysic,
-              children: [
-                // Greeting
-                SizedBox(
-                  height: 56 * LayoutConstant.scaleFactor,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: LayoutConstant.screenPadding,
+      body: GetBuilder<HomeController>(builder: (homeController) {
+        return Column(
+          children: [
+            // Body
+            Expanded(
+              child: ListView(
+                physics: AppTheme.scrollPhysic,
+                children: [
+                  // Greeting
+                  SizedBox(
+                    height: 56 * LayoutConstant.scaleFactor,
                   ),
-                  child: Text(
-                    'Hello John',
-                    style: context.theme.textTheme.titleLarge,
-                  ),
-                ),
-                SizedBox(
-                  height: 4 * LayoutConstant.scaleFactor,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: LayoutConstant.screenPadding,
-                  ),
-                  child: Text(
-                    'Welcome Back !',
-                    style: context.theme.textTheme.displaySmall,
-                  ),
-                ),
-
-                // Custom program
-                SizedBox(
-                  height: 24 * LayoutConstant.scaleFactor,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: LayoutConstant.screenPadding,
-                  ),
-                  child: CustomProgramCardComponent(
-                    program: Program(
-                      sysId: 'sysId',
-                      name: 'Custom program',
-                      level: ProgramLevel.starter,
-                      days: 30,
-                      status: ProgramStatus.notStarted,
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: LayoutConstant.screenPadding,
+                    ),
+                    child: Text(
+                      'Hello John',
+                      style: context.theme.textTheme.titleLarge,
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 4 * LayoutConstant.scaleFactor,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: LayoutConstant.screenPadding,
+                    ),
+                    child: Text(
+                      'Welcome Back !',
+                      style: context.theme.textTheme.displaySmall,
+                    ),
+                  ),
 
-                // Skills programs
-                ...programsUI(
-                  context,
-                  title: 'Skills',
-                  programs: programController.recommendedPrograms,
-                ),
+                  // Custom program
+                  FutureBuilder(
+                    future: homeController.customProgram,
+                    builder: (context, snapshot) {
+                      return snapshot.connectionState == ConnectionState.done
+                          ? (snapshot.hasData
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                    left: LayoutConstant.screenPadding,
+                                    right: LayoutConstant.screenPadding,
+                                    top: 24 * LayoutConstant.scaleFactor,
+                                  ),
+                                  child: CustomProgramCardComponent(
+                                      program: (snapshot.data as Program)),
+                                )
+                              : const SizedBox(
+                                  height: 0,
+                                ))
+                          : Padding(
+                              padding: EdgeInsets.only(
+                                left: LayoutConstant.screenPadding,
+                                right: LayoutConstant.screenPadding,
+                                top: 24 * LayoutConstant.scaleFactor,
+                              ),
+                              child: Text(
+                                'In Progress...',
+                                style: context.theme.textTheme.bodyMedium,
+                              ),
+                            );
+                    },
+                  ),
 
-                // Starter
-                ...programsUI(
-                  context,
-                  title: 'Starter',
-                  programs: programController.recommendedPrograms,
-                ),
+                  // Skills programs
+                  FutureBuilder(
+                      future: homeController.skills,
+                      builder: (context, snapshot) {
+                        return snapshot.connectionState == ConnectionState.done
+                            ? ((snapshot.hasData &&
+                                    (snapshot.data as List<Program>).isNotEmpty)
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: programsUI(
+                                      context,
+                                      title: 'Skills',
+                                      programs: snapshot.data as List<Program>,
+                                    ),
+                                  )
+                                : const SizedBox(
+                                    height: 0,
+                                  ))
+                            : Padding(
+                                padding: EdgeInsets.only(
+                                  left: LayoutConstant.screenPadding,
+                                  right: LayoutConstant.screenPadding,
+                                  top: 24 * LayoutConstant.scaleFactor,
+                                ),
+                                child: Text(
+                                  'In Progress...',
+                                  style: context.theme.textTheme.bodyMedium,
+                                ),
+                              );
+                      }),
 
-                // Gain muscle
-                ...programsUI(
-                  context,
-                  title: 'Gain muscle',
-                  programs: programController.recommendedPrograms,
-                ),
+                  // Starter
 
-                // Gain Strength
-                ...programsUI(
-                  context,
-                  title: 'Gain strength',
-                  programs: programController.recommendedPrograms,
-                ),
+                  // Gain muscle
 
-                // Bottom space
-                SizedBox(
-                  height: 16 * LayoutConstant.scaleFactor,
-                ),
-              ],
+                  // Gain Strength
+
+                  // Bottom space
+                  SizedBox(
+                    height: 16 * LayoutConstant.scaleFactor,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
     return Stack(
       children: [
