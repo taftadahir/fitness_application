@@ -18,7 +18,9 @@ class AnalyticScreen extends StatelessWidget {
       appBar: AppbarComponent(
         leading: IconButton(
           icon: const Icon(EvaIcons.arrowBackOutline),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: GetBuilder<ProgramController>(builder: (controller) {

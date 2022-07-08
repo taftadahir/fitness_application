@@ -1,11 +1,14 @@
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
+import 'package:fitness_application/constants/route_constant.dart';
 import 'package:fitness_application/controllers/register_controller.dart';
 import 'package:fitness_application/services/theme_service.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/button_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:fitness_application/controllers/drawer_controller.dart'
+    as drawer;
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -18,8 +21,12 @@ class RegisterScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              // TODO: Go to Home screen
               // TODO: Drawer should be closed
+              drawer.DrawerController drawerController = Get.find();
+              drawerController.closeDrawer();
+
+              // TODO: Go to Home screen
+              Get.offNamed(RouteConstant.homeScreen);
             },
             child: const Text('Do It Later'),
           ),
@@ -32,7 +39,7 @@ class RegisterScreen extends StatelessWidget {
             key: controller.registerFormKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Container(
-              height: Get.height - 40 * LayoutConstant.scaleFactor,
+              height: Get.height - LayoutConstant.appbarHeight,
               padding: EdgeInsets.only(
                 top: 40 * LayoutConstant.scaleFactor,
                 left: LayoutConstant.screenPadding,

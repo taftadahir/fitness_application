@@ -1,7 +1,9 @@
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
+import 'package:fitness_application/constants/route_constant.dart';
 import 'package:fitness_application/controllers/home_controller.dart';
 import 'package:fitness_application/models/program.dart';
+import 'package:fitness_application/services/storage_service.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/custom_program_card_component.dart';
 import 'package:fitness_application/views/components/program_card_component.dart';
@@ -27,11 +29,30 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.person),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(RouteConstant.profileScreen);
+            },
           ),
         ],
       ),
       body: GetBuilder<HomeController>(builder: (homeController) {
+        // Greeting
+        String? firstname = StorageService.firstname;
+        String greeting = '';
+        if (firstname != null && firstname != '') {
+          greeting = 'Hello $firstname';
+        } else {
+          DateTime datetime = DateTime.now();
+
+          if (datetime.hour < 12) {
+            greeting = 'Good morning';
+          } else if (datetime.hour < 18) {
+            greeting = 'Good afternoon';
+          } else {
+            greeting = 'Good evening';
+          }
+        }
+
         return Column(
           children: [
             // Body
@@ -48,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                       horizontal: LayoutConstant.screenPadding,
                     ),
                     child: Text(
-                      'Hello John',
+                      greeting,
                       style: context.theme.textTheme.titleLarge,
                     ),
                   ),

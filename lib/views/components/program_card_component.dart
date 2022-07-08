@@ -1,4 +1,6 @@
 import 'package:fitness_application/constants/layout_constant.dart';
+import 'package:fitness_application/constants/route_constant.dart';
+import 'package:fitness_application/controllers/program_controller.dart';
 import 'package:fitness_application/models/program.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +25,14 @@ class ProgramCardComponent extends StatelessWidget {
         splashColor: context.theme.cardColor,
         focusColor: context.theme.cardColor,
         highlightColor: context.theme.cardColor,
-        onTap: () {},
+        onTap: () {
+          // TODO: Update the custom program field from Program Controller
+          ProgramController programController = Get.find();
+          programController.program = program;
+
+          // TODO: Go to custom program screen
+          Get.toNamed(RouteConstant.programScreen);
+        },
         child: Container(
           constraints: BoxConstraints(
             minHeight: LayoutConstant.programCardHeight,

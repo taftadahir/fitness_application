@@ -30,7 +30,9 @@ class CustomProgramScreen extends StatelessWidget {
       appBar: AppbarComponent(
         leading: IconButton(
           icon: const Icon(EvaIcons.arrowBackOutline),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
         actions: [
           IconButton(
@@ -50,10 +52,16 @@ class CustomProgramScreen extends StatelessWidget {
       ),
       body: GetBuilder<ProgramController>(
         builder: (controller) => controller.customProgram == null
-            ? Text(
-                'No custom program',
-                textAlign: TextAlign.center,
-                style: context.theme.textTheme.titleLarge,
+            ? Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: LayoutConstant.screenPadding,
+                  vertical: LayoutConstant.screenPadding,
+                ),
+                child: Text(
+                  'No custom program',
+                  textAlign: TextAlign.center,
+                  style: context.theme.textTheme.titleLarge,
+                ),
               )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.start,

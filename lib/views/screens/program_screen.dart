@@ -30,7 +30,10 @@ class ProgramScreen extends StatelessWidget {
       appBar: AppbarComponent(
         leading: IconButton(
           icon: const Icon(EvaIcons.arrowBackOutline),
-          onPressed: () {},
+          onPressed: () {
+            // Go back to Home screen by removing the actual screen
+            Get.back();
+          },
         ),
         actions: [
           IconButton(

@@ -56,14 +56,36 @@ class DrawerScreen extends StatelessWidget {
                         style: context.theme.textTheme.headlineLarge,
                       ),
                       onTap: () {
-                        if (item.element == DrawerElement.onboarding) {
-                          // TODO: Set Onboarding activeIndex to [0]
-                          OnboardingController onboardingController =
-                              Get.find();
-                          onboardingController.activeIndex = 0;
+                        switch (item.element) {
+                          case DrawerElement.onboarding:
+                            // Onboarding element
+                            // TODO: Set Onboarding activeIndex to [0]
+                            OnboardingController onboardingController =
+                                Get.find();
+                            onboardingController.activeIndex = 0;
 
-                          // TODO: Go to Onboarding screen
-                          Get.offNamed(RouteConstant.onboardingScreen);
+                            // TODO: Go to Onboarding screen
+                            Get.offNamed(RouteConstant.onboardingScreen);
+                            break;
+                          case DrawerElement.home:
+                            controller.closeDrawer();
+                            break;
+                          case DrawerElement.profile:
+                            controller.closeDrawer();
+                            Get.toNamed(RouteConstant.profileScreen);
+                            break;
+                          case DrawerElement.favorite:
+                            controller.closeDrawer();
+                            Get.toNamed(RouteConstant.favoriteScreen);
+                            break;
+                          case DrawerElement.analytic:
+                            controller.closeDrawer();
+                            Get.toNamed(RouteConstant.analyticScreen);
+                            break;
+                          case DrawerElement.setting:
+                            controller.closeDrawer();
+                            Get.toNamed(RouteConstant.settingScreen);
+                            break;
                         }
                       },
                     ),

@@ -17,7 +17,10 @@ class FavoriteScreen extends StatelessWidget {
       appBar: AppbarComponent(
         leading: IconButton(
           icon: const Icon(EvaIcons.arrowBackOutline),
-          onPressed: () {},
+          onPressed: () {
+            // TODO: Go to Home screen
+            Get.back();
+          },
         ),
         actions: [
           IconButton(

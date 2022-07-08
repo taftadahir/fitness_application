@@ -1,38 +1,15 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:fitness_application/database/drawer_items.dart' as items;
 import 'package:fitness_application/models/drawer_item.dart';
 import 'package:get/get.dart';
 
 class DrawerController extends GetxController {
-  List<DrawerItem> drawerItems = [
-    DrawerItem(
-      element: DrawerElement.home,
-      iconData: EvaIcons.homeOutline,
-    ),
-    DrawerItem(
-      element: DrawerElement.profile,
-      iconData: EvaIcons.personOutline,
-    ),
-    DrawerItem(
-      element: DrawerElement.favorite,
-      iconData: EvaIcons.heartOutline,
-    ),
-    DrawerItem(
-      element: DrawerElement.analytic,
-      iconData: EvaIcons.activityOutline,
-    ),
-    DrawerItem(
-      element: DrawerElement.setting,
-      iconData: EvaIcons.settingsOutline,
-    ),
-    DrawerItem(
-      element: DrawerElement.onboarding,
-      iconData: EvaIcons.radioButtonOffOutline,
-    ),
-  ];
   bool _isDrawerOpen = false;
   double _xOffset = 0;
   double _yOffset = 0;
   double _scaleFactor = 1;
+
+  // Get of drawers items
+  List<DrawerItem> get drawerItems => items.drawerItems;
 
   // isDrawerOpen
   bool get isDrawerOpen => _isDrawerOpen;
