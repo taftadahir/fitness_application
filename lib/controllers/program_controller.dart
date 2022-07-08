@@ -1,5 +1,6 @@
-import 'dart:math';
+import 'dart:convert';
 
+import 'package:fitness_application/database/database_helper.dart';
 import 'package:fitness_application/models/exercise.dart';
 import 'package:fitness_application/models/program.dart';
 import 'package:fitness_application/models/workout.dart';
@@ -10,27 +11,6 @@ class ProgramController extends GetxController
     with GetSingleTickerProviderStateMixin {
   // Used in Program screen, Program detail screen, result screen
   Program? _program;
-  //  = Program(
-  //   sysId: 'sysId',
-  //   name: "CORE + ABS",
-  //   level: ProgramLevel.medium,
-  //   days: 30,
-  //   status: ProgramStatus.completed,
-  //   details:
-  //       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. ',
-  // );
-
-// Used in Program screen, Program detail screen, result screen
-  Program? _customProgram;
-  // = Program(
-  //   sysId: 'sysId',
-  //   name: "CORE + ABS",
-  //   level: ProgramLevel.medium,
-  //   days: 30,
-  //   status: ProgramStatus.completed,
-  //   details:
-  //       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. ',
-  // );
 
   // used to show workouts for program on that day
   int? _activeDay = 15;
@@ -39,7 +19,7 @@ class ProgramController extends GetxController
   late TabController tabController;
 
   // Contain program, exercises images for program detail screen and exercise
-  List<dynamic>? images = ['front_lever.png', 'front_lever.png'];
+  List<dynamic>? images;
 
   // used to show image for the program in program detail screen
   int? _activeImageIndex = 0;
@@ -75,25 +55,6 @@ class ProgramController extends GetxController
     ),
   );
 
-  // All list of workouts for the program
-  List<Workout> workouts = List.generate(
-    10,
-    (index) => Workout(
-      sysId: 'SysID$index',
-      programSysId: 'programSysId',
-      exerciseSysId: 'EX$index',
-      reps: 10 * index,
-      weight: 5 * index,
-      time: 100 * index,
-      restTime: 300,
-      status: WorkoutStatus.completed,
-      type: index < 3
-          ? WorkoutType.warmUp
-          : (index > 7 ? WorkoutType.coolDown : WorkoutType.workout),
-      day: 15,
-    ),
-  );
-
   // List of exercises
   List<Exercise> exercises = List.generate(
     12,
@@ -110,19 +71,28 @@ class ProgramController extends GetxController
   set program(Program? program) {
     // TODO: Update the program
     _program = program;
+
     if (program != null) {
+      // TODO: Update the list of images
+      images = jsonDecode((program.images == null || program.images == '')
+          ? "[]"
+          : program.images!) as List<dynamic>;
+
+      // TODO: Update the [_activeImageIndex]
+      _activeImageIndex = 0;
+
       update();
     }
   }
 
-  // Custom program
-  Program? get customProgram => _customProgram;
-  set customProgram(Program? program) {
-    // TODO: Update the custom program
-    _customProgram = program;
+  // List of workouts
+
+  Future<List<Workout>?>? get workouts {
+    final db = DatabaseHelper.instance;
     if (program != null) {
-      update();
+      return db.readAllWorkoutsForProgram(program!.sysId);
     }
+    return null;
   }
 
   int get activeImageIndex => _activeImageIndex ?? -1;

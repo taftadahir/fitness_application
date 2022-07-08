@@ -7,7 +7,7 @@ class HomeController extends GetxController {
   final String _customProgramSysId = 'CTPR';
 
   // List of skills
-  final List<String> _skills = ['CTPPROG0', 'CTPPROG1', 'CTPPROG2'];
+  final List<String> _skills = ['PROG0', 'PROG1'];
 
   // Get all programs from sysIds
   Future _getPrograms(List<String> sysIds) {

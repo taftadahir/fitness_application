@@ -17,7 +17,9 @@ class ProgramDetailScreen extends StatelessWidget {
       appBar: AppbarComponent(
         leading: IconButton(
           icon: const Icon(EvaIcons.arrowBackOutline),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
         actions: [
           IconButton(
@@ -67,20 +69,22 @@ class ProgramDetailScreen extends StatelessWidget {
                   ),
                   SizedBox(
                     height: LayoutConstant.activeDotSize,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        controller.images!.length,
-                        (index) => Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8 * LayoutConstant.scaleFactor,
-                          ),
-                          child: DotComponent(
-                            active: controller.activeImageIndex == index,
-                          ),
-                        ),
-                      ),
-                    ),
+                    child: controller.images != null
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                              controller.images!.length,
+                              (index) => Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8 * LayoutConstant.scaleFactor,
+                                ),
+                                child: DotComponent(
+                                  active: controller.activeImageIndex == index,
+                                ),
+                              ),
+                            ),
+                          )
+                        : null,
                   ),
                   SizedBox(
                     height: 24 * LayoutConstant.scaleFactor,

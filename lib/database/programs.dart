@@ -1,5 +1,6 @@
 import 'package:fitness_application/models/program.dart';
 
+// All programs data
 List<Program> get programs {
   // These properties to delete
   String? images =
@@ -10,39 +11,33 @@ List<Program> get programs {
   return [
     Program(
       sysId: 'CTPR',
-      name: 'For test',
+      name: 'Custom program',
+      days: 3,
+      lastCompletedDay: 1,
+      images: images,
+      details: details,
+      level: ProgramLevel.starter,
+      status: ProgramStatus.inProgress,
+    ),
+    Program(
+      sysId: 'PROG0',
+      name: 'Pull Up',
       days: 5,
+      lastCompletedDay: 3,
       images: images,
       details: details,
       level: ProgramLevel.starter,
       status: ProgramStatus.notStarted,
     ),
     Program(
-      sysId: 'CTPPROG0',
-      name: 'For test',
-      days: 5,
+      sysId: 'PROG1',
+      name: 'Push Up',
+      days: 2,
+      lastCompletedDay: 1,
       images: images,
       details: details,
       level: ProgramLevel.starter,
-      status: ProgramStatus.notStarted,
-    ),
-    Program(
-      sysId: 'CTPPROG1',
-      name: 'For test',
-      days: 5,
-      images: images,
-      details: details,
-      level: ProgramLevel.starter,
-      status: ProgramStatus.notStarted,
-    ),
-    Program(
-      sysId: 'CTPPROG2',
-      name: 'For test',
-      days: 5,
-      images: images,
-      details: details,
-      level: ProgramLevel.starter,
-      status: ProgramStatus.notStarted,
+      status: ProgramStatus.completed,
     ),
   ];
 }

@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
+import 'package:fitness_application/constants/route_constant.dart';
 import 'package:fitness_application/controllers/program_controller.dart';
 import 'package:fitness_application/models/workout.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
@@ -18,11 +19,13 @@ class ProgramScreen extends StatelessWidget {
     final dayKey = GlobalKey();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-        final context = dayKey.currentContext!;
-        await Scrollable.ensureVisible(
-          context,
-          alignment: 0.5,
-        );
+        final context = dayKey.currentContext;
+        if (context != null) {
+          await Scrollable.ensureVisible(
+            context,
+            alignment: 0.5,
+          );
+        }
       },
     );
 
@@ -42,21 +45,31 @@ class ProgramScreen extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(EvaIcons.infoOutline),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(RouteConstant.programDetailScreen);
+            },
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed(RouteConstant.restScreen);
+        },
         label: const Text('Start'),
       ),
       body: GetBuilder<ProgramController>(
-        builder: (controller) => controller.program == null
-            ? Text(
-                'No program',
-                textAlign: TextAlign.center,
-                style: context.theme.textTheme.titleLarge,
+        builder: (programController) => programController.program == null
+            ? Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: LayoutConstant.screenPadding,
+                  vertical: LayoutConstant.screenPadding,
+                ),
+                child: Text(
+                  'No program',
+                  textAlign: TextAlign.center,
+                  style: context.theme.textTheme.titleLarge,
+                ),
               )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -71,7 +84,7 @@ class ProgramScreen extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        "CORE + ABS",
+                        programController.program!.name,
                         textAlign: TextAlign.center,
                         style: context.theme.textTheme.titleLarge,
                       ),
@@ -84,23 +97,23 @@ class ProgramScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     physics: AppTheme.scrollPhysic,
                     child: Row(
-                      children: [
-                        ...List.generate(
-                          30,
-                          (index) => Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8 * LayoutConstant.scaleFactor,
-                            ),
-                            child: DayComponent(
-                              key:
-                                  index == controller.activeDay ? dayKey : null,
-                              day: index,
-                              active: index == controller.activeDay,
-                              completed: index <= controller.activeDay!,
-                            ),
+                      children: List.generate(
+                        programController.program!.days,
+                        (index) => Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8 * LayoutConstant.scaleFactor,
+                          ),
+                          child: DayComponent(
+                            key: index + 1 == programController.activeDay
+                                ? dayKey
+                                : null,
+                            day: index + 1,
+                            active: index + 1 == programController.activeDay,
+                            completed: index + 1 <=
+                                programController.program!.lastCompletedDay,
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -122,19 +135,52 @@ class ProgramScreen extends StatelessWidget {
                           SizedBox(
                             height: 16 * LayoutConstant.scaleFactor,
                           ),
-                          ...controller.workouts
-                              .where((workout) =>
-                                  workout.type == WorkoutType.warmUp &&
-                                  workout.day == controller.activeDay)
-                              .map(
-                                (workout) => Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: 8 * LayoutConstant.scaleFactor,
-                                  ),
-                                  child: WorkoutCardComponent(workout: workout),
-                                ),
-                              )
-                              .toList(),
+
+                          // List of workouts for Warm Up
+                          FutureBuilder(
+                            future: programController.workouts,
+                            builder: (context, snapshot) {
+                              return snapshot.connectionState ==
+                                      ConnectionState.done
+                                  ? ((snapshot.hasData &&
+                                          (snapshot.data as List<Workout>)
+                                              .isNotEmpty)
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: (snapshot.data
+                                                  as List<Workout>)
+                                              .where((workout) =>
+                                                  workout.type ==
+                                                      WorkoutType.warmUp &&
+                                                  workout.day ==
+                                                      programController
+                                                          .activeDay)
+                                              .map(
+                                                (workout) => Padding(
+                                                  padding: EdgeInsets.only(
+                                                    bottom: 8 *
+                                                        LayoutConstant
+                                                            .scaleFactor,
+                                                  ),
+                                                  child: WorkoutCardComponent(
+                                                      workout: workout),
+                                                ),
+                                              )
+                                              .toList(),
+                                        )
+                                      : const SizedBox(
+                                          height: 0,
+                                        ))
+                                  : const SizedBox(
+                                      height: 0,
+                                    );
+                            },
+                          ),
+
                           SizedBox(
                             height: 16 * LayoutConstant.scaleFactor,
                           ),
@@ -145,19 +191,52 @@ class ProgramScreen extends StatelessWidget {
                           SizedBox(
                             height: 16 * LayoutConstant.scaleFactor,
                           ),
-                          ...controller.workouts
-                              .where((workout) =>
-                                  workout.type == WorkoutType.workout &&
-                                  workout.day == controller.activeDay)
-                              .map(
-                                (workout) => Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: 8 * LayoutConstant.scaleFactor,
-                                  ),
-                                  child: WorkoutCardComponent(workout: workout),
-                                ),
-                              )
-                              .toList(),
+
+                          // List of workouts for Warm Up
+                          FutureBuilder(
+                            future: programController.workouts,
+                            builder: (context, snapshot) {
+                              return snapshot.connectionState ==
+                                      ConnectionState.done
+                                  ? ((snapshot.hasData &&
+                                          (snapshot.data as List<Workout>)
+                                              .isNotEmpty)
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: (snapshot.data
+                                                  as List<Workout>)
+                                              .where((workout) =>
+                                                  workout.type ==
+                                                      WorkoutType.workout &&
+                                                  workout.day ==
+                                                      programController
+                                                          .activeDay)
+                                              .map(
+                                                (workout) => Padding(
+                                                  padding: EdgeInsets.only(
+                                                    bottom: 8 *
+                                                        LayoutConstant
+                                                            .scaleFactor,
+                                                  ),
+                                                  child: WorkoutCardComponent(
+                                                      workout: workout),
+                                                ),
+                                              )
+                                              .toList(),
+                                        )
+                                      : const SizedBox(
+                                          height: 0,
+                                        ))
+                                  : const SizedBox(
+                                      height: 0,
+                                    );
+                            },
+                          ),
+
                           SizedBox(
                             height: 16 * LayoutConstant.scaleFactor,
                           ),
@@ -168,19 +247,52 @@ class ProgramScreen extends StatelessWidget {
                           SizedBox(
                             height: 16 * LayoutConstant.scaleFactor,
                           ),
-                          ...controller.workouts
-                              .where((workout) =>
-                                  workout.type == WorkoutType.coolDown &&
-                                  workout.day == controller.activeDay)
-                              .map(
-                                (workout) => Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: 8 * LayoutConstant.scaleFactor,
-                                  ),
-                                  child: WorkoutCardComponent(workout: workout),
-                                ),
-                              )
-                              .toList(),
+
+                          // List of workouts for Warm Up
+                          FutureBuilder(
+                            future: programController.workouts,
+                            builder: (context, snapshot) {
+                              return snapshot.connectionState ==
+                                      ConnectionState.done
+                                  ? ((snapshot.hasData &&
+                                          (snapshot.data as List<Workout>)
+                                              .isNotEmpty)
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: (snapshot.data
+                                                  as List<Workout>)
+                                              .where((workout) =>
+                                                  workout.type ==
+                                                      WorkoutType.coolDown &&
+                                                  workout.day ==
+                                                      programController
+                                                          .activeDay)
+                                              .map(
+                                                (workout) => Padding(
+                                                  padding: EdgeInsets.only(
+                                                    bottom: 8 *
+                                                        LayoutConstant
+                                                            .scaleFactor,
+                                                  ),
+                                                  child: WorkoutCardComponent(
+                                                      workout: workout),
+                                                ),
+                                              )
+                                              .toList(),
+                                        )
+                                      : const SizedBox(
+                                          height: 0,
+                                        ))
+                                  : const SizedBox(
+                                      height: 0,
+                                    );
+                            },
+                          ),
+
                           SizedBox(
                             height: 48 * LayoutConstant.scaleFactor,
                           ),

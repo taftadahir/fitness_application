@@ -17,7 +17,12 @@ class RestScreen extends StatelessWidget {
       appBar: AppbarComponent(
         leading: IconButton(
           icon: const Icon(EvaIcons.close),
-          onPressed: () {},
+          onPressed: () {
+            // TODO: Should show a popup in order to close the screen
+
+            // Will be removed
+            Get.back();
+          },
         ),
       ),
       body: SingleChildScrollView(

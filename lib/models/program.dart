@@ -13,6 +13,7 @@ class Program extends Model {
   String? images;
   String? details;
   ProgramStatus status;
+  int lastCompletedDay;
 
   // Not modifiable anymore after creation
   final String sysId;
@@ -28,6 +29,7 @@ class Program extends Model {
     required this.status,
     this.images,
     this.details,
+    this.lastCompletedDay = 0,
   });
 
   @override
@@ -40,6 +42,7 @@ class Program extends Model {
     int? days,
     String? images,
     String? details,
+    int? lastCompletedDay,
   }) =>
       Program(
         id: id ?? this.id,
@@ -50,6 +53,7 @@ class Program extends Model {
         status: status ?? this.status,
         images: images ?? this.images,
         details: details ?? this.details,
+        lastCompletedDay: lastCompletedDay ?? this.lastCompletedDay,
       );
 
   @override
@@ -62,6 +66,7 @@ class Program extends Model {
         ProgramDetail.days: days,
         ProgramDetail.level: level.name,
         ProgramDetail.status: status.name,
+        ProgramDetail.lastCompletedDay: lastCompletedDay,
       };
 
   static Program fromJson(Map<String, Object?> json) => Program(
@@ -73,6 +78,7 @@ class Program extends Model {
         days: json[ProgramDetail.days] as int,
         level: ProgramDetail.getLevel(json[ProgramDetail.level] as String),
         status: ProgramDetail.getStatus(json[ProgramDetail.status] as String),
+        lastCompletedDay: json[ProgramDetail.lastCompletedDay] as int,
       );
 }
 
@@ -127,6 +133,7 @@ class ProgramDetail {
     days,
     status,
     level,
+    lastCompletedDay,
   ];
 
   static const String id = '_id';
@@ -137,6 +144,7 @@ class ProgramDetail {
   static const String status = 'status';
   static const String level = 'level';
   static const String days = 'days';
+  static const String lastCompletedDay = 'last_completed_day';
 
   static ProgramStatus getStatus(String status) {
     if (status == DatabaseConstant.programStatusInProgress) {

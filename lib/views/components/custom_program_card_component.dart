@@ -26,9 +26,16 @@ class CustomProgramCardComponent extends StatelessWidget {
         focusColor: context.theme.cardColor,
         highlightColor: context.theme.cardColor,
         onTap: () {
-          // TODO: Update the custom program field from Program Controller
+          // TODO: Update the program field from Program Controller
           ProgramController programController = Get.find();
-          programController.customProgram = program;
+          programController.program = program;
+
+          // TODO: Update the active day
+          if (programController.program!.lastCompletedDay < program.days) {
+            programController.activeDay = program.lastCompletedDay + 1;
+          } else {
+            programController.activeDay = program.lastCompletedDay;
+          }
 
           // TODO: Go to custom program screen
           Get.toNamed(RouteConstant.customProgramScreen);

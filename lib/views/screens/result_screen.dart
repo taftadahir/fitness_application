@@ -27,7 +27,7 @@ class ResultScreen extends StatelessWidget {
             SizedBox(
               height: 32 * LayoutConstant.scaleFactor,
             ),
-            ResultComponent(workouts: controller.workouts),
+            // ResultComponent(workouts: controller.workouts),
             SizedBox(
               height: 32 * LayoutConstant.scaleFactor,
             ),
@@ -54,17 +54,17 @@ class ResultScreen extends StatelessWidget {
                   horizontal: LayoutConstant.screenPadding,
                 ),
                 children: [
-                  ...controller.workouts
-                      .where((workout) => workout.day == controller.activeDay)
-                      .map(
-                        (workout) => Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 8 * LayoutConstant.scaleFactor,
-                          ),
-                          child: WorkoutCardComponent(workout: workout),
-                        ),
-                      )
-                      .toList(),
+                  // ...controller.workouts
+                  //     .where((workout) => workout.day == controller.activeDay)
+                  //     .map(
+                  //       (workout) => Padding(
+                  //         padding: EdgeInsets.only(
+                  //           bottom: 8 * LayoutConstant.scaleFactor,
+                  //         ),
+                  //         child: WorkoutCardComponent(workout: workout),
+                  //       ),
+                  //     )
+                  //     .toList(),
                   SizedBox(
                     height: 16 * LayoutConstant.scaleFactor,
                   ),

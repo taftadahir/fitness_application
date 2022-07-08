@@ -61,6 +61,7 @@ class DatabaseHelper {
       ${ProgramDetail.sysId} $textType NOT NULL,
       ${ProgramDetail.name} $textType NOT NULL,
       ${ProgramDetail.days} $numberType NOT NULL,
+      ${ProgramDetail.lastCompletedDay} $numberType NOT NULL,
       ${ProgramDetail.status} $textType NOT NULL,
       ${ProgramDetail.images} $textType,
       ${ProgramDetail.details} $textType,

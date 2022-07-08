@@ -100,7 +100,7 @@ class Workout extends Model {
       status: WorkoutDetail.getStatus(json[WorkoutDetail.status] as String),
       reps: json[WorkoutDetail.reps] as int?,
       time: json[WorkoutDetail.time] as int?,
-      restTime: json[WorkoutDetail.restTime] as int,
+      restTime: json[WorkoutDetail.restTime] as int?,
       weight: json[WorkoutDetail.weight] as int?,
     );
   }
