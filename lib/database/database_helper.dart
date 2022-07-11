@@ -7,6 +7,7 @@ import 'package:fitness_application/models/exercise.dart';
 import 'package:fitness_application/models/model.dart';
 import 'package:fitness_application/models/program.dart';
 import 'package:fitness_application/models/workout.dart';
+import 'package:fitness_application/services/storage_service.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -107,6 +108,9 @@ class DatabaseHelper {
       workoutBatch.insert(Workout.table, workout.toJson());
     }
     workoutBatch.commit();
+
+    // TODO: Insert default count down (30 sec)
+    StorageService.countDown = 30;
   }
 
   // Insert data

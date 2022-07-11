@@ -20,7 +20,7 @@ class RestScreen extends StatelessWidget {
           onPressed: () {
             // TODO: Should show a popup in order to close the screen
 
-            // Will be removed
+            // Will be removed and used in the popup logics
             Get.back();
           },
         ),
@@ -103,7 +103,13 @@ class RestScreen extends StatelessWidget {
                     height: 8 * LayoutConstant.scaleFactor,
                   ),
                   ButtonComponent(
-                    onPressed: () {},
+                    onPressed: () {
+                      // TODO: Should close the timer
+                      TimerController timerController = Get.find();
+                      timerController.cancelTimer();
+                    },
+                    // TODO: The text should change from [Skip] to [Continue] depending on timer count value.
+                    // if count <= 0, text = [Continue], else [Skip]
                     text: 'Skip',
                   ),
                   SizedBox(

@@ -39,13 +39,15 @@ class TimerController extends GetxController {
     }
   }
 
-  // Cancel timer
+  // TODO: Cancel timer function
   void cancelTimer() {
     if (_timer != null) {
       _timer!.cancel();
     }
 
-    // Reset the count
+    // Reset Fields
     _count = 0;
+    initialCount = 0;
+    isTimer=null;
   }
 }

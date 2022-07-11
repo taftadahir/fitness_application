@@ -33,7 +33,7 @@ class TimerComponent extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '${(100 * percent).toInt()}',
+              '$count',
               style: context.theme.textTheme.displayLarge,
             ),
             SizedBox(

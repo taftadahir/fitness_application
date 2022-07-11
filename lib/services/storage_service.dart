@@ -30,6 +30,12 @@ class StorageService {
   static set lastname(String? lastname) =>
       _storage.write(StorageConstant.lastname, lastname);
 
+  // Count down
+  static int? get countDown => _storage.read(StorageConstant.countDown);
+
+  static set countDown(int? countDown) =>
+      _storage.write(StorageConstant.countDown, countDown);
+
   // Storage getter
   static get storage => _storage;
 }
