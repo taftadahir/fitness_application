@@ -24,6 +24,15 @@ class ProgramController extends GetxController
   // used to show image for the program in program detail screen
   int? _activeImageIndex = 0;
 
+  // Workout
+  Workout? workout;
+
+  // Workout position
+  int? workoutPosition;
+
+  // Workouts length
+  int? workoutsLength;
+
   // Exercise for exercise screen
   Exercise? exercise = Exercise(
       sysId: 'sysId',
@@ -86,7 +95,6 @@ class ProgramController extends GetxController
   }
 
   // List of workouts
-
   Future<List<Workout>?>? get workouts {
     final db = DatabaseHelper.instance;
     if (program != null) {
@@ -109,6 +117,7 @@ class ProgramController extends GetxController
       update();
     }
   }
+
 
   @override
   void onInit() {

@@ -26,7 +26,7 @@ class TimerController extends GetxController {
 
   // TODO: Used to start the timer
   void startTimer() {
-    if (isTimer != null && isTimer!) {
+    if (isTimer != null && isTimer! && _timer == null) {
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         if (_count > 0) {
           _count--;
@@ -43,11 +43,12 @@ class TimerController extends GetxController {
   void cancelTimer() {
     if (_timer != null) {
       _timer!.cancel();
+      _timer = null;
     }
 
     // Reset Fields
     _count = 0;
     initialCount = 0;
-    isTimer=null;
+    isTimer = null;
   }
 }

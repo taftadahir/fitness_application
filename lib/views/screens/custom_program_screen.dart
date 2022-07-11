@@ -3,8 +3,10 @@ import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
 import 'package:fitness_application/constants/route_constant.dart';
 import 'package:fitness_application/controllers/program_controller.dart';
+import 'package:fitness_application/controllers/timer_controller.dart';
 import 'package:fitness_application/database/database_helper.dart';
 import 'package:fitness_application/models/workout.dart';
+import 'package:fitness_application/services/storage_service.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/day_component.dart';
 import 'package:fitness_application/views/components/workout_card_component.dart';
@@ -52,7 +54,24 @@ class CustomProgramScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // TODO: Go to Count down
+          // TODO: Get Countdown
+          int? countDown = StorageService.countDown;
+          TimerController timerController = Get.find();
+          if (countDown != null && countDown > 0) {
+            // TODO: Initialize the timer with this count down
+            timerController.count = countDown;
+            timerController.initialCount = countDown;
+
+            // This is used to run the timer
+            timerController.isTimer = true;
+            timerController.startTimer();
+          } else {
+            timerController.isTimer = false;
+          }
+
+          // TODO: Get and update the next workout
+
+          // TODO: Go Rest screen
           Get.toNamed(RouteConstant.restScreen);
         },
         label: const Text('Start'),

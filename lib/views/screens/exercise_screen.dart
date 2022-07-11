@@ -17,7 +17,9 @@ class ExerciseScreen extends StatelessWidget {
       appBar: AppbarComponent(
         leading: IconButton(
           icon: const Icon(EvaIcons.arrowBackOutline),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
         actions: [
           IconButton(

@@ -17,7 +17,9 @@ class WorkoutOnScreen extends StatelessWidget {
       appBar: AppbarComponent(
         leading: IconButton(
           icon: const Icon(EvaIcons.close),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
         actions: [
           IconButton(
@@ -58,7 +60,7 @@ class WorkoutOnScreen extends StatelessWidget {
               SizedBox(
                 height: 24 * LayoutConstant.scaleFactor,
               ),
-              
+
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

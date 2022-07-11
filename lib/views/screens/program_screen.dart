@@ -8,6 +8,7 @@ import 'package:fitness_application/models/workout.dart';
 import 'package:fitness_application/services/storage_service.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/day_component.dart';
+import 'package:fitness_application/views/components/snack_bar_component.dart';
 import 'package:fitness_application/views/components/workout_card_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -72,9 +73,25 @@ class ProgramScreen extends StatelessWidget {
           }
 
           // TODO: Get and update the next workout
+          ProgramController programController = Get.find();
+          programController.workout = Workout(
+            sysId: 'sysId',
+            programSysId: 'programSysId',
+            exerciseSysId: 'exerciseSysId',
+            day: 3,
+          );
 
           // TODO: Go Rest screen
-          Get.toNamed(RouteConstant.restScreen);
+          if (programController.workout != null) {
+            Get.toNamed(RouteConstant.restScreen);
+          } else {
+            // TODO: Show a snackbar meaning we don't have a next workout to show a rest time time before it.
+            SnackBarComponent.snackbar(
+              context,
+              title: 'title',
+              message: 'No next workout',
+            );
+          }
         },
         label: const Text('Start'),
       ),
@@ -160,44 +177,49 @@ class ProgramScreen extends StatelessWidget {
                           FutureBuilder(
                             future: programController.workouts,
                             builder: (context, snapshot) {
-                              return snapshot.connectionState ==
-                                      ConnectionState.done
-                                  ? ((snapshot.hasData &&
-                                          (snapshot.data as List<Workout>)
-                                              .isNotEmpty)
-                                      ? Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: (snapshot.data
-                                                  as List<Workout>)
-                                              .where((workout) =>
-                                                  workout.type ==
-                                                      WorkoutType.warmUp &&
-                                                  workout.day ==
-                                                      programController
-                                                          .activeDay)
-                                              .map(
-                                                (workout) => Padding(
-                                                  padding: EdgeInsets.only(
-                                                    bottom: 8 *
-                                                        LayoutConstant
-                                                            .scaleFactor,
-                                                  ),
-                                                  child: WorkoutCardComponent(
-                                                      workout: workout),
-                                                ),
-                                              )
-                                              .toList(),
-                                        )
-                                      : const SizedBox(
-                                          height: 0,
-                                        ))
-                                  : const SizedBox(
-                                      height: 0,
-                                    );
+                              if (snapshot.connectionState ==
+                                      ConnectionState.done &&
+                                  snapshot.hasData &&
+                                  (snapshot.data as List<Workout>).isNotEmpty) {
+                                // Update workout position
+                                programController.workoutPosition = 0;
+
+                                // TODO: Update the workout
+                                programController.workout =
+                                    (snapshot.data as List<Workout>)[
+                                        programController.workoutPosition!];
+
+                                // Update workouts length
+                                programController.workoutsLength =
+                                    (snapshot.data as List<Workout>).length;
+
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: (snapshot.data as List<Workout>)
+                                      .where((workout) =>
+                                          workout.type == WorkoutType.warmUp &&
+                                          workout.day ==
+                                              programController.activeDay)
+                                      .map(
+                                        (workout) => Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom:
+                                                8 * LayoutConstant.scaleFactor,
+                                          ),
+                                          child: WorkoutCardComponent(
+                                              workout: workout),
+                                        ),
+                                      )
+                                      .toList(),
+                                );
+                              } else {
+                                return const SizedBox(
+                                  height: 0,
+                                );
+                              }
                             },
                           ),
 
