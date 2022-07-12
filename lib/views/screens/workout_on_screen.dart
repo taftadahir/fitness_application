@@ -97,6 +97,13 @@ class WorkoutOnScreen extends StatelessWidget {
               } else {
                 timerController.isTimer = false;
 
+                // TODO: Update the last completed day for that program
+                programController.program?.lastCompletedDay =
+                    programController.activeDay!;
+                await db.updateData(
+                    programController.program!, programController.program!.id!);
+                programController.update();
+
                 // TODO: Go to Result screen
                 Get.offNamed(RouteConstant.resultScreen);
               }

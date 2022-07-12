@@ -1,6 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
+import 'package:fitness_application/database/database_helper.dart';
+import 'package:fitness_application/models/exercise.dart';
 import 'package:fitness_application/models/workout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -72,6 +74,9 @@ class WorkoutCardComponent extends StatelessWidget {
       ));
     }
 
+    // Database
+    final db = DatabaseHelper.instance;
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(LayoutConstant.cardRadius),
@@ -95,10 +100,24 @@ class WorkoutCardComponent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Text(
-                      workout.exerciseSysId,
-                      style: context.theme.textTheme.headlineLarge,
-                    ),
+                    FutureBuilder(
+                        future: db.readBySysId(
+                          table: Exercise.table,
+                          sysId: workout.exerciseSysId,
+                        ),
+                        builder: (context, snapshot) {
+                          return snapshot.connectionState ==
+                                      ConnectionState.done &&
+                                  snapshot.hasData
+                              ? Text(
+                                  (snapshot.data as Exercise).name,
+                                  style: context.theme.textTheme.headlineLarge,
+                                )
+                              : Text(
+                                  'In Progress...',
+                                  style: context.theme.textTheme.bodyMedium,
+                                );
+                        }),
                     SizedBox(
                       height: 8 * LayoutConstant.scaleFactor,
                     ),

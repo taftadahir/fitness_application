@@ -9,6 +9,7 @@ import 'package:fitness_application/models/workout.dart';
 import 'package:fitness_application/services/storage_service.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/day_component.dart';
+import 'package:fitness_application/views/components/snack_bar_component.dart';
 import 'package:fitness_application/views/components/workout_card_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,7 +54,7 @@ class CustomProgramScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
+        onPressed: () async {
           // TODO: Get Countdown
           int? countDown = StorageService.countDown;
           TimerController timerController = Get.find();
@@ -69,10 +70,34 @@ class CustomProgramScreen extends StatelessWidget {
             timerController.isTimer = false;
           }
 
+          ProgramController programController = Get.find();
+
+          // Update workout position
+          programController.workoutPosition = 0;
+
           // TODO: Get and update the next workout
+          List<Workout>? workouts = (await programController.workouts)
+              ?.where((workout) => workout.day == programController.activeDay)
+              .toList();
+          programController.workout = workouts
+              ?.firstWhereOrNull((workout) => workout.prevWorkoutSysId == null);
+
+          // Update workouts length
+          programController.workoutsLength =
+              workouts != null ? workouts.length : 0;
 
           // TODO: Go Rest screen
-          Get.toNamed(RouteConstant.restScreen);
+          if (programController.workout != null &&
+              programController.workoutPosition != null) {
+            Get.toNamed(RouteConstant.restScreen);
+          } else {
+            // TODO: Show a snackbar meaning we don't have a next workout to show a rest time time before it.
+            SnackBarComponent.snackbar(
+              context,
+              title: 'title',
+              message: 'No next workout',
+            );
+          }
         },
         label: const Text('Start'),
       ),
