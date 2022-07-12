@@ -32,7 +32,7 @@ class AnalyticScreen extends StatelessWidget {
               height: 32 * LayoutConstant.scaleFactor,
             ),
             FutureBuilder(
-                future: controller.workouts,
+                future: controller.allWorkouts,
                 builder: (context, snapshot) =>
                     snapshot.connectionState == ConnectionState.done &&
                             (snapshot.hasData &&
@@ -69,7 +69,7 @@ class AnalyticScreen extends StatelessWidget {
                 ),
                 children: [
                   ...controller.exercises
-                      .groupListsBy((element) => element.sysId)
+                      .groupListsBy((exercise) => exercise.sysId)
                       .values
                       .map(
                         (exercises) => Padding(
@@ -77,7 +77,7 @@ class AnalyticScreen extends StatelessWidget {
                             bottom: 8 * LayoutConstant.scaleFactor,
                           ),
                           child: FutureBuilder(
-                            future: controller.workouts,
+                            future: controller.allWorkouts,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                       ConnectionState.done &&

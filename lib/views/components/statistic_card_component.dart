@@ -31,7 +31,11 @@ class StatisticCardComponent extends StatelessWidget {
 
     // Workout details
     for (var workout in workouts) {
-      completedWorkouts++;
+      // Completed workouts
+      if (workout.status == WorkoutStatus.completed) {
+        completedWorkouts++;
+      }
+
       // Reps
       if (workout.reps != null) {
         // Check if repsMin is not null and greater than the workout reps

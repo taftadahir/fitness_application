@@ -72,6 +72,20 @@ class ProgramController extends GetxController
     ),
   );
 
+  // TODO: All workouts for result component
+  Future<List<Workout>?>? get allWorkouts async {
+    final db = await DatabaseHelper.instance.database;
+
+    final result = await db.query(
+      Workout.table,
+    );
+    return result.map((json) {
+      return Workout.fromJson(
+        json,
+      );
+    }).toList();
+  }
+
   // List of exercises
   List<Exercise> exercises = db.exercises;
 
