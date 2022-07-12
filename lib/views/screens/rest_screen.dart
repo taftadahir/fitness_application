@@ -4,7 +4,7 @@ import 'package:fitness_application/constants/layout_constant.dart';
 import 'package:fitness_application/constants/route_constant.dart';
 import 'package:fitness_application/controllers/program_controller.dart';
 import 'package:fitness_application/controllers/timer_controller.dart';
-import 'package:fitness_application/models/workout.dart';
+import 'package:fitness_application/models/exercise.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/button_component.dart';
 import 'package:fitness_application/views/components/pop_up_component.dart';
@@ -61,68 +61,61 @@ class RestScreen extends StatelessWidget {
             children: [
               // Next workout
               GetBuilder<ProgramController>(builder: (programController) {
-                return FutureBuilder(
-                  future: programController.workouts,
-                  builder: (context, snapshot) {
-                    return snapshot.connectionState == ConnectionState.done
-                        ? ((snapshot.hasData &&
-                                (snapshot.data as List<Workout>).isNotEmpty &&
-                                programController.workoutPosition != null)
-                            ? Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  SizedBox(
-                                    height: 32 * LayoutConstant.scaleFactor,
-                                  ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          (snapshot.data as List<Workout>)[
-                                                  programController
-                                                      .workoutPosition!]
-                                              .exerciseSysId,
-                                          maxLines: 2,
-                                          textAlign: TextAlign.right,
-                                          style: context
-                                              .theme.textTheme.titleLarge,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 8 * LayoutConstant.scaleFactor,
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          Get.toNamed(
-                                              RouteConstant.exerciseScreen);
-                                        },
-                                        icon: const Icon(
-                                          Icons.help_outline_rounded,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 8 * LayoutConstant.scaleFactor,
-                                  ),
-                                  Text(
-                                    "Next workout ( ${programController.workoutPosition! + 1} / ${(snapshot.data as List<Workout>).length} )",
-                                    textAlign: TextAlign.center,
-                                    style: context.theme.textTheme.bodyLarge,
-                                  ),
-                                ],
-                              )
-                            : const SizedBox(
-                                height: 0,
-                              ))
-                        : const SizedBox(
-                            height: 0,
-                          );
-                  },
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    SizedBox(
+                      height: 32 * LayoutConstant.scaleFactor,
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: FutureBuilder(
+                            future: programController.exercise,
+                            builder: (context, snapshot) {
+                              return snapshot.connectionState ==
+                                          ConnectionState.done &&
+                                      snapshot.hasData
+                                  ? Text(
+                                      (snapshot.data as Exercise).name,
+                                      maxLines: 2,
+                                      textAlign: TextAlign.right,
+                                      style: context.theme.textTheme.titleLarge,
+                                    )
+                                  : Text(
+                                      'Unknown exercise',
+                                      maxLines: 2,
+                                      textAlign: TextAlign.right,
+                                      style: context.theme.textTheme.titleLarge,
+                                    );
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8 * LayoutConstant.scaleFactor,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Get.toNamed(RouteConstant.exerciseScreen);
+                          },
+                          icon: const Icon(
+                            Icons.help_outline_rounded,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8 * LayoutConstant.scaleFactor,
+                    ),
+                    Text(
+                      "Next workout ( ${programController.workoutPosition! + 1} / ${programController.workoutsLength} )",
+                      textAlign: TextAlign.center,
+                      style: context.theme.textTheme.bodyLarge,
+                    ),
+                  ],
                 );
               }),
 
@@ -155,9 +148,37 @@ class RestScreen extends StatelessWidget {
                   GetBuilder<TimerController>(builder: (timerController) {
                     return ButtonComponent(
                       onPressed: () {
+                        ProgramController programController = Get.find();
+
                         // TODO: Should close the timer
                         timerController.cancelTimer();
-                        Get.toNamed(RouteConstant.workoutOnScreen);
+
+                        if (programController.workout != null &&
+                            programController.workout?.time != null) {
+                          // TODO: If workout use timer, start timer and update fields
+
+                          timerController.count =
+                              programController.workout!.time!;
+                          timerController.initialCount =
+                              programController.workout!.time!;
+
+                          // This is used to run the timer
+                          timerController.isTimer = true;
+                          timerController.startTimer();
+                        } else if (programController.workout != null &&
+                            programController.workout?.reps != null) {
+                          // TODO: If workout use reps, don't start timer
+
+                          timerController.count =
+                              programController.workout!.reps!;
+                          timerController.initialCount =
+                              programController.workout!.reps!;
+
+                          // This is used to run the timer
+                          timerController.isTimer = false;
+                        }
+
+                        Get.offNamed(RouteConstant.workoutOnScreen);
                       },
                       // TODO: The text should change from [Skip] to [Continue] depending on timer count value.
                       // if count <= 0, text = [Continue], else [Skip]

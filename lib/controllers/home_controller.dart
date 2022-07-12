@@ -21,6 +21,10 @@ class HomeController extends GetxController {
   // Custom program getter
   Future get customProgram {
     final db = DatabaseHelper.instance;
-    return db.readBySysId(Program.table, _customProgramSysId);
+    return db.readBySysId(
+      table: Program.table,
+      sysId: _customProgramSysId,
+      columnName: ProgramDetail.sysId,
+    );
   }
 }

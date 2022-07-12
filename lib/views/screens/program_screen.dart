@@ -56,7 +56,7 @@ class ProgramScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
+        onPressed: () async {
           // TODO: Get Countdown
           int? countDown = StorageService.countDown;
           TimerController timerController = Get.find();
@@ -72,17 +72,25 @@ class ProgramScreen extends StatelessWidget {
             timerController.isTimer = false;
           }
 
-          // TODO: Get and update the next workout
           ProgramController programController = Get.find();
-          programController.workout = Workout(
-            sysId: 'sysId',
-            programSysId: 'programSysId',
-            exerciseSysId: 'exerciseSysId',
-            day: 3,
-          );
+
+          // Update workout position
+          programController.workoutPosition = 0;
+
+          // TODO: Get and update the next workout
+          List<Workout>? workouts = (await programController.workouts)
+              ?.where((workout) => workout.day == programController.activeDay)
+              .toList();
+          programController.workout = workouts
+              ?.firstWhereOrNull((workout) => workout.prevWorkoutSysId == null);
+
+          // Update workouts length
+          programController.workoutsLength =
+              workouts != null ? workouts.length : 0;
 
           // TODO: Go Rest screen
-          if (programController.workout != null) {
+          if (programController.workout != null &&
+              programController.workoutPosition != null) {
             Get.toNamed(RouteConstant.restScreen);
           } else {
             // TODO: Show a snackbar meaning we don't have a next workout to show a rest time time before it.
@@ -180,19 +188,13 @@ class ProgramScreen extends StatelessWidget {
                               if (snapshot.connectionState ==
                                       ConnectionState.done &&
                                   snapshot.hasData &&
-                                  (snapshot.data as List<Workout>).isNotEmpty) {
-                                // Update workout position
-                                programController.workoutPosition = 0;
-
-                                // TODO: Update the workout
-                                programController.workout =
-                                    (snapshot.data as List<Workout>)[
-                                        programController.workoutPosition!];
-
-                                // Update workouts length
-                                programController.workoutsLength =
-                                    (snapshot.data as List<Workout>).length;
-
+                                  (snapshot.data as List<Workout>)
+                                      .where((workout) =>
+                                          workout.day ==
+                                              programController.activeDay &&
+                                          workout.type == WorkoutType.warmUp)
+                                      .toList()
+                                      .isNotEmpty) {
                                 return Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment:

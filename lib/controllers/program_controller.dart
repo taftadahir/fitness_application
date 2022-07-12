@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fitness_application/database/database_helper.dart';
 import 'package:fitness_application/models/exercise.dart';
+import 'package:fitness_application/models/model.dart';
 import 'package:fitness_application/models/program.dart';
 import 'package:fitness_application/models/workout.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +35,17 @@ class ProgramController extends GetxController
   int? workoutsLength;
 
   // Exercise for exercise screen
-  Exercise? exercise = Exercise(
-      sysId: 'sysId',
-      name: 'Push Up',
-      details:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum ac et urna. ');
+  Future<Model?>? get exercise {
+    final db = DatabaseHelper.instance;
+    if (workout != null) {
+      return db.readBySysId(
+        table: Exercise.table,
+        sysId: workout!.exerciseSysId,
+        columnName: ExerciseDetail.sysId,
+      );
+    }
+    return null;
+  }
 
   // List of recommended programs
   List<Program> recommendedPrograms = List.generate(
@@ -117,7 +124,6 @@ class ProgramController extends GetxController
       update();
     }
   }
-
 
   @override
   void onInit() {

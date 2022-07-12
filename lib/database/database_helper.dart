@@ -145,12 +145,16 @@ class DatabaseHelper {
   }
 
   // Read by sys id
-  Future<Model?> readBySysId(String table, String sysId) async {
+  Future<Model?> readBySysId({
+    required String table,
+    String columnName = 'sys_id',
+    required String sysId,
+  }) async {
     final db = await instance.database;
 
     final result = await db.query(
       table,
-      where: 'sys_id = ?',
+      where: '$columnName = ?',
       whereArgs: [sysId],
     );
 
