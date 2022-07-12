@@ -53,7 +53,54 @@ class WorkoutOnScreen extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(EvaIcons.arrowheadRightOutline),
-            onPressed: () {},
+            onPressed: () async {
+              //TODO: Skipped
+              final db = DatabaseHelper.instance;
+              // Update workout
+              ProgramController programController = Get.find();
+              programController.workout?.status = WorkoutStatus.skipped;
+              await db.updateData(
+                  programController.workout!, programController.workout!.id!);
+
+              Workout? workout = await db.readBySysId(
+                table: Workout.table,
+                sysId: programController.workout != null
+                    ? programController.workout!.sysId
+                    : '',
+                columnName: WorkoutDetail.prevWorkoutSysId,
+              ) as Workout?;
+
+              TimerController timerController = Get.find();
+              // TODO: Initialize the timer with this count down
+              timerController.count =
+                  programController.workout!.restTime != null
+                      ? programController.workout!.restTime!
+                      : 0;
+              timerController.initialCount =
+                  programController.workout!.restTime != null
+                      ? programController.workout!.restTime!
+                      : 0;
+
+              if (workout != null) {
+                programController.workout = workout;
+                programController.workoutPosition =
+                    programController.workoutPosition != null
+                        ? programController.workoutPosition! + 1
+                        : programController.workoutPosition;
+
+                // This is used to run the timer
+                timerController.isTimer =
+                    programController.workout!.restTime != null;
+                timerController.startTimer();
+
+                Get.offNamed(RouteConstant.restScreen);
+              } else {
+                timerController.isTimer = false;
+
+                // TODO: Go to Result screen
+                Get.offNamed(RouteConstant.resultScreen);
+              }
+            },
           ),
         ],
       ),
@@ -176,6 +223,12 @@ class WorkoutOnScreen extends StatelessWidget {
                               ? programController.workout!.restTime!
                               : 0;
 
+                      // Update workout
+                      programController.workout?.status =
+                          WorkoutStatus.completed;
+                      await db.updateData(programController.workout!,
+                          programController.workout!.id!);
+
                       if (workout != null) {
                         programController.workout = workout;
                         programController.workoutPosition =
@@ -191,8 +244,9 @@ class WorkoutOnScreen extends StatelessWidget {
                         Get.offNamed(RouteConstant.restScreen);
                       } else {
                         timerController.isTimer = false;
-                        // TODO: Go to Analytic screen
-                        Get.offNamed(RouteConstant.analyticScreen);
+
+                        // TODO: Go to Result screen
+                        Get.offNamed(RouteConstant.resultScreen);
                       }
                     },
                     text: 'Done',

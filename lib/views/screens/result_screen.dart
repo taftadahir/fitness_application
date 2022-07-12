@@ -1,7 +1,9 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
+import 'package:fitness_application/constants/route_constant.dart';
 import 'package:fitness_application/controllers/program_controller.dart';
+import 'package:fitness_application/models/workout.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/result_component.dart';
 import 'package:fitness_application/views/components/workout_card_component.dart';
@@ -17,7 +19,9 @@ class ResultScreen extends StatelessWidget {
       appBar: AppbarComponent(
         leading: IconButton(
           icon: const Icon(EvaIcons.homeOutline),
-          onPressed: () {},
+          onPressed: () {
+            Get.offAllNamed(RouteConstant.homeScreen);
+          },
         ),
       ),
       body: GetBuilder<ProgramController>(builder: (controller) {
@@ -27,7 +31,18 @@ class ResultScreen extends StatelessWidget {
             SizedBox(
               height: 32 * LayoutConstant.scaleFactor,
             ),
-            // ResultComponent(workouts: controller.workouts),
+            FutureBuilder(
+                future: controller.workouts,
+                builder: (context, snapshot) {
+                  return snapshot.connectionState == ConnectionState.done &&
+                          snapshot.hasData
+                      ? ResultComponent(
+                          workouts: snapshot.data as List<Workout>)
+                      : Text(
+                          'In Progress...',
+                          style: context.theme.textTheme.bodyMedium,
+                        );
+                }),
             SizedBox(
               height: 32 * LayoutConstant.scaleFactor,
             ),
@@ -54,6 +69,34 @@ class ResultScreen extends StatelessWidget {
                   horizontal: LayoutConstant.screenPadding,
                 ),
                 children: [
+                  FutureBuilder(
+                    future: controller.workouts,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done &&
+                          snapshot.hasData) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: (snapshot.data as List<Workout>)
+                              .toList()
+                              .map(
+                                (workout) => Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: 8 * LayoutConstant.scaleFactor,
+                                  ),
+                                  child: WorkoutCardComponent(workout: workout),
+                                ),
+                              )
+                              .toList(),
+                        );
+                      } else {
+                        return Text(
+                          'In Progress...',
+                          style: context.theme.textTheme.bodyMedium,
+                        );
+                      }
+                    },
+                  ),
                   // ...controller.workouts
                   //     .where((workout) => workout.day == controller.activeDay)
                   //     .map(

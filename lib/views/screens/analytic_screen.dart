@@ -76,13 +76,27 @@ class AnalyticScreen extends StatelessWidget {
                           padding: EdgeInsets.only(
                             bottom: 8 * LayoutConstant.scaleFactor,
                           ),
-                          // child: StatisticCardComponent(
-                          //   exercise: exercises[0],
-                          //   workouts: controller.workouts
-                          //       .where((workout) =>
-                          //           workout.exerciseSysId == exercises[0].sysId)
-                          //       .toList(),
-                          // ),
+                          child: FutureBuilder(
+                            future: controller.workouts,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                      ConnectionState.done &&
+                                  snapshot.hasData) {
+                                return StatisticCardComponent(
+                                    exercise: exercises[0],
+                                    workouts: (snapshot.data as List<Workout>)
+                                        .where((workout) =>
+                                            workout.exerciseSysId ==
+                                            exercises[0].sysId)
+                                        .toList());
+                              } else {
+                                return Text(
+                                  'In Progress...',
+                                  style: context.theme.textTheme.bodyMedium,
+                                );
+                              }
+                            },
+                          ),
                         ),
                       )
                       .toList(),

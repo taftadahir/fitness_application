@@ -7,6 +7,7 @@ import 'package:fitness_application/models/program.dart';
 import 'package:fitness_application/models/workout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:fitness_application/database/exercises.dart' as db;
 
 class ProgramController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -72,15 +73,7 @@ class ProgramController extends GetxController
   );
 
   // List of exercises
-  List<Exercise> exercises = List.generate(
-    12,
-    (index) => Exercise(
-      sysId: 'EX$index',
-      name: 'Push Up$index',
-      images:
-          '["front_lever.png", "front_lever.png", "front_lever.png", "front_lever.png"]',
-    ),
-  );
+  List<Exercise> exercises = db.exercises;
 
   // Program
   Program? get program => _program;
