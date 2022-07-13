@@ -2,6 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
 import 'package:fitness_application/constants/route_constant.dart';
+import 'package:fitness_application/controllers/add_workout_controller.dart';
 import 'package:fitness_application/controllers/program_controller.dart';
 import 'package:fitness_application/controllers/timer_controller.dart';
 import 'package:fitness_application/database/database_helper.dart';
@@ -197,6 +198,10 @@ class CustomProgramScreen extends StatelessWidget {
                                 context,
                                 () {
                                   // TODO: Need to specify what type of workout we want to create
+                                  AddWorkoutController workoutController =
+                                      Get.find();
+
+                                  workoutController.type = WorkoutType.warmUp;
                                   Get.toNamed(RouteConstant.addWorkoutScreen);
                                 },
                               ),
@@ -265,6 +270,10 @@ class CustomProgramScreen extends StatelessWidget {
                                 context,
                                 () {
                                   // TODO: Need to specify what type of workout we want to create
+                                  AddWorkoutController workoutController =
+                                      Get.find();
+
+                                  workoutController.type = WorkoutType.workout;
                                   Get.toNamed(RouteConstant.addWorkoutScreen);
                                 },
                               ),
@@ -333,6 +342,10 @@ class CustomProgramScreen extends StatelessWidget {
                                 context,
                                 () {
                                   // TODO: Need to specify what type of workout we want to create
+                                  AddWorkoutController workoutController =
+                                      Get.find();
+
+                                  workoutController.type = WorkoutType.coolDown;
                                   Get.toNamed(RouteConstant.addWorkoutScreen);
                                 },
                               ),

@@ -37,7 +37,11 @@ class ResultScreen extends StatelessWidget {
                   return snapshot.connectionState == ConnectionState.done &&
                           snapshot.hasData
                       ? ResultComponent(
-                          workouts: snapshot.data as List<Workout>)
+                          workouts: (snapshot.data as List<Workout>)
+                              .where((workout) =>
+                                  workout.day == controller.activeDay)
+                              .toList(),
+                        )
                       : Text(
                           'In Progress...',
                           style: context.theme.textTheme.bodyMedium,
@@ -78,6 +82,8 @@ class ResultScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: (snapshot.data as List<Workout>)
+                              .where((workout) =>
+                                  workout.day == controller.activeDay)
                               .toList()
                               .map(
                                 (workout) => Padding(

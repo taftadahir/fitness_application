@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fitness_application/configs/app_theme.dart';
 import 'package:fitness_application/constants/layout_constant.dart';
+import 'package:fitness_application/constants/route_constant.dart';
 import 'package:fitness_application/controllers/add_workout_controller.dart';
 import 'package:fitness_application/views/components/appbar_component.dart';
 import 'package:fitness_application/views/components/dot_component.dart';
@@ -32,7 +33,15 @@ class AddWorkoutScreen extends StatelessWidget {
       floatingActionButton:
           GetBuilder<AddWorkoutController>(builder: (controller) {
         return FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            if (controller.exercise != null) {
+              // TODO: Save the workout
+              controller.save();
+            } else {
+              // TODO: Goto [Choose Exercise]
+              Get.toNamed(RouteConstant.addWorkoutChooseExerciseScreen);
+            }
+          },
           label: Text(controller.exercise != null ? 'Save' : 'Choose exercise'),
         );
       }),
@@ -104,8 +113,8 @@ class AddWorkoutScreen extends StatelessWidget {
                       initialValue: null,
                       keyboardType: TextInputType.number,
                       style: context.theme.textTheme.headlineMedium,
-                      onSaved: null,
-                      controller: null,
+                      onSaved: (value) => controller.reps = value,
+                      controller: controller.repsController,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: LayoutConstant.screenPadding,
@@ -127,8 +136,8 @@ class AddWorkoutScreen extends StatelessWidget {
                       initialValue: null,
                       keyboardType: TextInputType.number,
                       style: context.theme.textTheme.headlineMedium,
-                      onSaved: null,
-                      controller: null,
+                      onSaved: (value) => controller.weight = value,
+                      controller: controller.weigthController,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: LayoutConstant.screenPadding,
@@ -136,6 +145,34 @@ class AddWorkoutScreen extends StatelessWidget {
                         ),
                         label: Text(
                           'Weight (kg)',
+                          style: context.theme.textTheme.displaySmall,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 8 * LayoutConstant.scaleFactor,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Flexible(
+                    child: TextFormField(
+                      validator: (value) => null,
+                      initialValue: null,
+                      keyboardType: TextInputType.number,
+                      style: context.theme.textTheme.headlineMedium,
+                      onSaved: (value) => controller.time = value,
+                      controller: controller.timeController,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: LayoutConstant.screenPadding,
+                          vertical: 12 * LayoutConstant.scaleFactor,
+                        ),
+                        label: Text(
+                          'time (sec)',
                           style: context.theme.textTheme.displaySmall,
                         ),
                       ),
@@ -150,8 +187,8 @@ class AddWorkoutScreen extends StatelessWidget {
                       initialValue: null,
                       keyboardType: TextInputType.number,
                       style: context.theme.textTheme.headlineMedium,
-                      onSaved: null,
-                      controller: null,
+                      onSaved: (value) => controller.rest = value,
+                      controller: controller.restController,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: LayoutConstant.screenPadding,

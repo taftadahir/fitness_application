@@ -27,4 +27,7 @@ class HomeController extends GetxController {
       columnName: ProgramDetail.sysId,
     );
   }
+
+  // Custom program
+  String get customProgramSysId => _customProgramSysId;
 }
